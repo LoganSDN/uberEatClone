@@ -23,16 +23,22 @@ public class Users {
         private String lastName;
         private String email;
         private String role;
+        private String login;
+        private String password;
+        private String token;
 
         // Be aware of mappedBy => /!\ Must have the SAME NAME as the field in Orders entity
         @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
         private List<Orders> ordersList;
 
-        public Users(String firstName, String lastName, String email, String role) {
+        public Users(String firstName, String lastName, String email, String role, String login, String password, String token) {
                 this.firstName = firstName;
                 this.lastName = lastName;
                 this.email = email;
                 this.role = role;
+                this.login = login;
+                this.password = password;
+                this.token = token;
                 this.ordersList = new ArrayList<>();
         }
 }

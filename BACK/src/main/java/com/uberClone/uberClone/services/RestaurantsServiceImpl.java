@@ -14,8 +14,8 @@ public class RestaurantsServiceImpl implements RestaurantsService {
     RestaurantRepository restaurantRepository;
 
     @Override
-    public void createRestaurant(Restaurants restaurant) {
-        this.restaurantRepository.save(restaurant);
+    public Restaurants createRestaurant(Restaurants restaurant) {
+        return this.restaurantRepository.save(restaurant);
     }
 
     @Override
@@ -28,6 +28,9 @@ public class RestaurantsServiceImpl implements RestaurantsService {
         this.restaurantRepository.deleteById(Long.parseLong(id));
     }
 
+    public Restaurants getRestaurantById(String id) {
+        return this.restaurantRepository.findById(Long.parseLong(id)).orElse(null);
+    }
     @Override
     public List<Restaurants> getAllRestaurant() {
         return this.restaurantRepository.findAll();

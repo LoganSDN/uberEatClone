@@ -5,10 +5,13 @@ import com.uberClone.uberClone.entities.Users;
 import com.uberClone.uberClone.repositories.RestaurantRepository;
 import com.uberClone.uberClone.repositories.UsersRepository;
 import com.uberClone.uberClone.services.interfaces.UsersService;
+import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UsersServiceImpl implements UsersService {
@@ -39,4 +42,23 @@ public class UsersServiceImpl implements UsersService {
     public Users getUsersById(String id) {
         return this.usersRepository.findById(Long.parseLong(id)).orElse(null);
     }
+
+    @Override
+    public String login(String username, String password) {
+        Optional<Users> user = usersRepository.login(username, password);
+        if (user.isPresent()) {
+            String token = UUID.randomUUID().toString();
+            Users custom = user.get();
+            custom.setToken(token);
+            usersRepository.save(custom);
+            return token;
+        }
+        return "";
+    }
+
+    @Override
+    public Users getUserByLogin(String login) {
+        return this.usersRepository.findByLogin(login).orElse(null);
+    }
+
 }
