@@ -1,5 +1,6 @@
 # uberEatClone
 Implementation of an application that is a clone of Uber eat // BACK : Spring - FRONT : Flutter
+The purpose of this app is to understand notions about spring and flutter.
 
 # UberEat Clone Application
 
