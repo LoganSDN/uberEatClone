@@ -1,64 +1,64 @@
 package com.uberClone.uberClone.services;
 
-import com.uberClone.uberClone.entities.Restaurants;
-import com.uberClone.uberClone.entities.Users;
-import com.uberClone.uberClone.repositories.RestaurantRepository;
-import com.uberClone.uberClone.repositories.UsersRepository;
+import com.uberClone.uberClone.entities.Role;
+import com.uberClone.uberClone.entities.User;
+import com.uberClone.uberClone.repositories.RoleRepository;
+import com.uberClone.uberClone.repositories.UserRepository;
 import com.uberClone.uberClone.services.interfaces.UsersService;
-import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UsersServiceImpl implements UsersService {
     @Autowired
-    UsersRepository usersRepository;
+    UserRepository userRepository;
+    @Autowired
+    RoleRepository roleRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
-    public Users createUser(Users user) {
-        return this.usersRepository.save(user);
+    @Transactional
+    public User createUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        Set<Role> roles = new HashSet<>();
+        for (Role role : user.getRoles()) {
+            Role existingRole = roleRepository.findByName(role.getName()).orElse(null);
+            System.out.println(existingRole);
+            if (existingRole != null) {
+                roles.add(existingRole);
+            }
+        }
+        user.setRoles(roles);
+        System.out.println("hello world" + user.getRoles());
+        return userRepository.save(user);
     }
 
     @Override
-    public void updateUser(String id, Users user) {
-        this.usersRepository.save(user);
+    public void updateUser(String id, User user) {
+        this.userRepository.save(user);
     }
 
     @Override
     public void deleteUser(String id) {
-        this.usersRepository.deleteById(Long.parseLong(id));
+        this.userRepository.deleteById(Long.parseLong(id));
     }
 
     @Override
-    public List<Users> getAllUsers() {
-        return this.usersRepository.findAll();
+    public List<User> getAllUsers() {
+        return this.userRepository.findAll();
     }
 
     @Override
-    public Users getUsersById(String id) {
-        return this.usersRepository.findById(Long.parseLong(id)).orElse(null);
+    public User getUsersById(Long id) {
+        return this.userRepository.findById(id).orElse(null);
     }
 
-    @Override
-    public String login(String username, String password) {
-        Optional<Users> user = usersRepository.login(username, password);
-        if (user.isPresent()) {
-            String token = UUID.randomUUID().toString();
-            Users custom = user.get();
-            custom.setToken(token);
-            usersRepository.save(custom);
-            return token;
-        }
-        return "";
-    }
-
-    @Override
-    public Users getUserByLogin(String login) {
-        return this.usersRepository.findByLogin(login).orElse(null);
-    }
 
 }

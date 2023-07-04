@@ -1,16 +1,13 @@
 package com.uberClone.uberClone.services.interfaces;
 
-import com.uberClone.uberClone.entities.Users;
+import com.uberClone.uberClone.entities.User;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UsersService {
-    Users createUser(Users user);
-    void updateUser(String id, Users user);
+    User createUser(User user);
+    void updateUser(String id, User user);
     void deleteUser(String id);
-    List<Users> getAllUsers();
-    Users getUsersById(String id);
-    String login(String username, String password);
-    Users getUserByLogin(String login);
+    List<User> getAllUsers();
+    User getUsersById(Long id);
 }

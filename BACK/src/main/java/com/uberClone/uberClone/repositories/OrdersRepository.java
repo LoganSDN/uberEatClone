@@ -1,7 +1,9 @@
 package com.uberClone.uberClone.repositories;
 
-import com.uberClone.uberClone.entities.Orders;
+import com.uberClone.uberClone.entities.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface OrdersRepository extends JpaRepository<Orders, Long> {
+@Repository
+public interface OrdersRepository extends JpaRepository<Order, Long> {
 }

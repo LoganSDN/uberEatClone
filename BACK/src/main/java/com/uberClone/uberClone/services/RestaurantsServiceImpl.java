@@ -1,11 +1,16 @@
 package com.uberClone.uberClone.services;
 
-import com.uberClone.uberClone.entities.Restaurants;
+import com.uberClone.uberClone.entities.Address;
+import com.uberClone.uberClone.entities.Restaurant;
 import com.uberClone.uberClone.repositories.RestaurantRepository;
 import com.uberClone.uberClone.services.interfaces.RestaurantsService;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,12 +19,26 @@ public class RestaurantsServiceImpl implements RestaurantsService {
     RestaurantRepository restaurantRepository;
 
     @Override
-    public Restaurants createRestaurant(Restaurants restaurant) {
-        return this.restaurantRepository.save(restaurant);
+    public ResponseEntity<Restaurant> createRestaurant(Restaurant newRestaurant) {
+        Restaurant restaurant = new Restaurant();
+        restaurant.setOrders(new ArrayList<>());
+        restaurant.setName(newRestaurant.getName());
+        restaurant.setOpeningTime(newRestaurant.getOpeningTime());
+        restaurant.setClosingTime(newRestaurant.getClosingTime());
+        Address address = new Address();
+        address.setStreet(newRestaurant.getAddress().getStreet());
+        address.setCity(newRestaurant.getAddress().getCity());
+        address.setZIP(newRestaurant.getAddress().getZIP());
+        address.setRestaurant(restaurant);
+        restaurant.setAddress(address);
+
+        Restaurant createdRestaurant = restaurantRepository.save(restaurant);
+        return new ResponseEntity<>(createdRestaurant, HttpStatus.CREATED);
     }
 
+
     @Override
-    public void updateRestaurant(String id, Restaurants restaurant) {
+    public void updateRestaurant(String id, Restaurant restaurant) {
         this.restaurantRepository.save(restaurant);
     }
 
@@ -28,11 +47,11 @@ public class RestaurantsServiceImpl implements RestaurantsService {
         this.restaurantRepository.deleteById(Long.parseLong(id));
     }
 
-    public Restaurants getRestaurantById(String id) {
-        return this.restaurantRepository.findById(Long.parseLong(id)).orElse(null);
+    public Restaurant getRestaurantById(Long id) {
+        return this.restaurantRepository.findById(id).orElse(null);
     }
     @Override
-    public List<Restaurants> getAllRestaurant() {
+    public List<Restaurant> getAllRestaurant() {
         return this.restaurantRepository.findAll();
     }
 }

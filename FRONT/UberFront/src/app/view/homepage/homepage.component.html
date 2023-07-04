@@ -1,0 +1,9 @@
+<app-sidebar #sidebar></app-sidebar>
+<div id="body">
+	<app-navbar (openNavEvent)="sidebar.toggleNav()"></app-navbar>
+	<div class="h-100 d-flex align-items-center">
+		<app-search-bar></app-search-bar>
+	</div>
+</div>
+<app-carousel class="d-flex justify-content-center" style="margin-top: 3em!important;"></app-carousel>
+<app-footer></app-footer>

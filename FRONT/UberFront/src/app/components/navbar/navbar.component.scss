@@ -1,0 +1,31 @@
+.pill {
+	border: none;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	margin: 4px 2px;
+	cursor: pointer;
+	border-radius: 2em;
+	padding: 1em 1.8em;
+	transition: ease-in-out 0.2s;
+	font-size: 16px;
+	font-weight: 500;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1), 0px 4px 4px rgba(0, 0, 0, 0.04);}
+
+.pill.black:hover {
+	background-color: #333333!important;
+}
+.pill.white:hover {
+	background-color: #ccc!important;
+}
+
+.pill.black {
+	background-color: #000;
+	color: #fff;
+}
+
+.pill.white {
+	background-color: #fff;
+	color: #000;
+}

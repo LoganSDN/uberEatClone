@@ -1,14 +1,14 @@
 package com.uberClone.uberClone.services.interfaces;
 
-import com.uberClone.uberClone.entities.Restaurants;
+import com.uberClone.uberClone.entities.Restaurant;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface RestaurantsService {
-    Restaurants createRestaurant(Restaurants restaurant);
-    void updateRestaurant(String id, Restaurants restaurant);
+    ResponseEntity<Restaurant> createRestaurant(Restaurant restaurant);
+    void updateRestaurant(String id, Restaurant restaurant);
     void deleteRestaurant(String id);
-
-    Restaurants getRestaurantById(String id);
-    List<Restaurants> getAllRestaurant();
+    Restaurant getRestaurantById(Long id);
+    List<Restaurant> getAllRestaurant();
 }

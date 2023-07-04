@@ -1,18 +1,15 @@
 package com.uberClone.uberClone.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
-
-import java.util.List;
 
 @Entity
 @Table(name = "address")
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 public class Address {
     @Id
@@ -21,13 +18,25 @@ public class Address {
     private String street;
     private String city;
     private String ZIP;
-    @OneToOne(mappedBy = "address")
-    private Restaurants restaurant;
 
-    public Address(String street, String city, String ZIP, Restaurants restaurant) {
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private Restaurant restaurant;
+
+    public Address(String street, String city, String ZIP) {
         this.street = street;
         this.city = city;
         this.ZIP = ZIP;
-        this.restaurant = restaurant;
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id=" + id +
+                ", street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", ZIP='" + ZIP + '\'' +
+                '}';
     }
 }
