@@ -6,6 +6,7 @@ import { lastValueFrom } from 'rxjs';
 import { TokenI, DecodedTokenI } from 'src/app/interfaces/token';
 import { APICallService } from 'src/app/services/api-call.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { HeaderService } from 'src/app/services/header.service';
 import { JwtService } from 'src/app/services/jwt.service';
 
 @Component({
@@ -33,8 +34,7 @@ export class LoginComponent {
   async onConnect() {
     try {
       this.loading = true;
-
-      this.tokenResponse = await lastValueFrom(this._apiCallService.post('http://localhost:8080/auth/login', this.loginForm.value)) as TokenI;
+      this.tokenResponse = await lastValueFrom(this._apiCallService.post('/api/auth/login', this.loginForm.value)) as TokenI;
     } catch (error) {
       console.log(error);
       this._snackBar.open('An error occurred. Please try again.', 'Dismiss', {
@@ -47,7 +47,7 @@ export class LoginComponent {
       if (this.tokenResponse) {
         this._authService.token = this.tokenResponse.accessToken;
         const decodedToken: DecodedTokenI = this._jwtService.decodeToken(this.tokenResponse.accessToken);
-        this._authService.user = decodedToken.user 
+        this._authService.user = decodedToken.user
         this._authService.isLogged = true;
         this._snackBar.open('Vous êtes connecté', 'OK', {
           duration: 1000,

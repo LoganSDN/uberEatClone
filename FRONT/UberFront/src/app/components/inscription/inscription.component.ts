@@ -24,7 +24,7 @@ export class InscriptionComponent {
   }
 
   async onSubmit() {
-    const newUser = await lastValueFrom(this._apiCallService.post('http://localhost:8080/users/add', this.signUpForm.value))
+    const newUser = await lastValueFrom(this._apiCallService.post('/api/users/add', this.signUpForm.value))
     console.log(newUser);
   }
 }

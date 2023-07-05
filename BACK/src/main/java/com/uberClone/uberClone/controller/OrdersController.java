@@ -2,6 +2,7 @@ package com.uberClone.uberClone.controller;
 
 import com.uberClone.uberClone.entities.Order;
 import com.uberClone.uberClone.services.interfaces.OrdersService;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,6 +25,7 @@ public class OrdersController {
     @PostMapping(path = "/new-order",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
+    @RolesAllowed({"ROLE_CUSTOMER", "ROLE_ADMIN"})
     public ResponseEntity<Order> createNewOrder(@RequestBody Order newOrder) {
         System.out.println(newOrder.toString());
         Order savedOrder = this.ordersService.createOrder(newOrder);

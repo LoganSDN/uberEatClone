@@ -25,6 +25,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { InscriptionComponent } from './components/inscription/inscription.component';
 import { AllRestaurantsComponent } from './view/all-restaurants/all-restaurants.component';
+import { ProfileComponent } from './view/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { AllRestaurantsComponent } from './view/all-restaurants/all-restaurants.
     LoginComponent,
     InscriptionComponent,
     AllRestaurantsComponent,
+    ProfileComponent,
   ],
   imports: [
     MatButtonModule,

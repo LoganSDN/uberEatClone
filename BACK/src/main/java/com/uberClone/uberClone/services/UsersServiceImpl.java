@@ -6,6 +6,8 @@ import com.uberClone.uberClone.repositories.RoleRepository;
 import com.uberClone.uberClone.repositories.UserRepository;
 import com.uberClone.uberClone.services.interfaces.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +20,6 @@ public class UsersServiceImpl implements UsersService {
     UserRepository userRepository;
     @Autowired
     RoleRepository roleRepository;
-
     @Autowired
     PasswordEncoder passwordEncoder;
 
@@ -29,6 +30,7 @@ public class UsersServiceImpl implements UsersService {
 
         Set<Role> roles = new HashSet<>();
         for (Role role : user.getRoles()) {
+            System.out.println(role.getName());
             Role existingRole = roleRepository.findByName(role.getName()).orElse(null);
             System.out.println(existingRole);
             if (existingRole != null) {
@@ -59,6 +61,5 @@ public class UsersServiceImpl implements UsersService {
     public User getUsersById(Long id) {
         return this.userRepository.findById(id).orElse(null);
     }
-
 
 }

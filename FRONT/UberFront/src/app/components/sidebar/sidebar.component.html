@@ -1,10 +1,20 @@
 <div id="mySidenav" class="sidenav">
-	<div class="p-3 d-flex flex-column gap-3"  *ngIf="!isLogged">
-		<button mat-raised-button style="background-color: black; color: white; height: 4em;" routerLink="/sign-up">
+	<div class="p-3 d-flex flex-column gap-3" *ngIf="!isLogged; else logged">
+		<button mat-raised-button style="background-color: black; color: white; height: 4em" routerLink="/sign-up">
 			Inscription
 		</button>
-		<button mat-raised-button style="background-color: rgb(238, 238, 238); height: 4em;" routerLink="/sign-in">
+		<button mat-raised-button style="background-color: rgb(238, 238, 238); height: 4em" routerLink="/sign-in">
 			Connexion
 		</button>
 	</div>
+	<ng-template #logged>
+		<div class="p-3 d-flex flex-column gap-3">
+			<button mat-raised-button style="background-color: black; color: white; height: 4em" routerLink="/profile">
+				Profil
+			</button>
+			<button mat-raised-button style="background-color: rgb(238, 238, 238); height: 4em">
+				Déconnexion
+			</button>
+		</div>
+	</ng-template>
 </div>

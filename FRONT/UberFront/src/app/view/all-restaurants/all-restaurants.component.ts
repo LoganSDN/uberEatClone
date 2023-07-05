@@ -12,7 +12,7 @@ export class AllRestaurantsComponent implements OnInit {
   constructor(private _apiCallService: APICallService) { }
 
   async ngOnInit() {
-    const restaurants = await lastValueFrom(this._apiCallService.get('http://localhost:8080/restaurant/all'));
+    const restaurants = await lastValueFrom(this._apiCallService.get('/api/restaurant/all'));
     console.log(restaurants);
   }
 

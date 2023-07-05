@@ -28,11 +28,13 @@ public class UserController {
     private UsersService userService;
 
     @GetMapping("/all")
+    @RolesAllowed("ROLE_ADMIN")
     public ResponseEntity<List<User>> getUsers() {
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
+    @RolesAllowed("ROLE_ADMIN")
     public ResponseEntity<User> getUserById(@PathVariable("id") String id) {
         User user = userService.getUsersById(Long.parseLong(id));
         if (user.equals(null)) {
@@ -46,7 +48,6 @@ public class UserController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> create(@RequestBody User newUser) throws ServerException {
-        System.out.print(newUser);
         User user = userService.createUser(newUser);
         if (user.equals(null)) {
             throw new ServerException("Unable to create user");

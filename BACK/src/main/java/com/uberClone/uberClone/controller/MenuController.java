@@ -3,6 +3,7 @@ package com.uberClone.uberClone.controller;
 import com.uberClone.uberClone.entities.Menu;
 import com.uberClone.uberClone.entities.Product;
 import com.uberClone.uberClone.services.interfaces.MenuService;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ public class MenuController {
     @PostMapping(path = "/{id}/new-product",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
+    @RolesAllowed({"ROLE_EDITOR", "ROLE_ADMIN"})
     public ResponseEntity<Product> addProduct(@PathVariable Long id, @RequestBody Product product) {
         Menu menu = this.menuService.getMenuById(id);
         if (menu == null)

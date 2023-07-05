@@ -10,11 +10,20 @@
 			<h3 style="margin: 0; padding: 0; font-family: 'Uber Move Text';">Uber <b>Eats</b></h3>
 		</a>
 	</div>
-	<div class="d-flex flex-row align-items-center gap-2" style="margin-right: 1.8em;" *ngIf="!isLogged">
+	<div class="d-flex flex-row align-items-center gap-2" style="margin-right: 1.8em;" *ngIf="!isLogged else logged">
 		<button class="pill white" routerLink="/sign-in">
 			<i class="fas fa-user" style="margin-right: 0.5em;"></i>
 			Connexion
 		</button>
 		<button class="pill black" routerLink="/sign-up">Inscription</button>
 	</div>
+	<ng-template #logged>
+		<div class="d-flex flex-row align-items-center gap-2">
+			<button class="pill white" routerLink="/profile">
+				<i class="fas fa-user" style="margin-right: 0.5em;"></i>
+				Profil
+			</button>
+			<button class="pill black">Déconnexion</button>
+		</div>
+	</ng-template>
 </div>
