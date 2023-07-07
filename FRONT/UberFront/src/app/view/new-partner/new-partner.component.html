@@ -25,14 +25,13 @@
 		<form [formGroup]="partnerForm" class="d-flex flex-column" style="width: 40em" (submit)="submit()">
 			<mat-form-field>
 				<mat-label>Adresse</mat-label>
-				<input matInput placeholder="Votre adresse" formControlName="address" [matAutocomplete]="auto" />
+				<input matInput placeholder="Votre adresse" formControlName="address" [matAutocomplete]="auto"/>
 				<mat-autocomplete #auto="matAutocomplete">
 					<mat-option *ngFor="let suggestion of suggestedAddresses" [value]="suggestion">
 						{{ suggestion }}
 					</mat-option>
 				</mat-autocomplete>
 			</mat-form-field>
-			<input type="text" (input)="onAddressChange()" #addressText />
 			<mat-form-field>
 				<mat-label>Nom du restaurant</mat-label>
 				<input matInput placeholder="Nom du restaurant" formControlName="restaurantName" required />
@@ -65,7 +64,7 @@
 		</form>
 
 		<button mat-raised-button type="submit" class="w-100 align-self-end"
-			style="height: 3em; background-color: #000; color: #fff">
+			style="height: 3em; background-color: #000; color: #fff" (click)="submit()">
 			S'inscrire
 		</button>
 	</div>

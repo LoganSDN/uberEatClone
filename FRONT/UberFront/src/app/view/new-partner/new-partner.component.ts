@@ -24,25 +24,12 @@ export class NewPartnerComponent implements OnInit {
 
   filteredAddresses!: Observable<string[]>;
 
-  @ViewChild('addressText') addressText!: ElementRef;
 
   protected placeSubscription!: Subscription;
 
   constructor(private _placesService: PlacesService) { }
 
   ngAfterViewInit(): void {
-    this._placesService.getPlaceAutocomplete(this.addressText);
-  }
-
-  onAddressChange(): void {
-    this.placeSubscription =
-      this._placesService.placeObservable$.subscribe(
-        (place) => {
-          if (place) {
-            console.log('nouvelle adresse : ', place.formatted_address);
-          }
-        }
-      );
   }
 
   ngOnInit() {
@@ -58,12 +45,28 @@ export class NewPartnerComponent implements OnInit {
     });
   }
 
+  private _parseAddress(address: string) {
+    const addrProperties: string[] = address.split(',');
+    console.log(addrProperties);
+    const res = {
+      street: addrProperties[0],
+      city: addrProperties[1],
+      // ZIP: addrProperties[2], // TO CHANGE
+    }
+    return res;
+  }
+
   submit() {
+    this._parseAddress(this.partnerForm.get('address')!.value as string);
     const post = {
-      ...this.partnerForm.value,
+      address: this._parseAddress(this.partnerForm.get('address')!.value as string),
+      restaurantName: this.partnerForm.get('restaurantName')!.value,
+      firstName: this.partnerForm.get('firstName')!.value,
+      lastName: this.partnerForm.get('lastName')!.value,
+      email: this.partnerForm.get('email')!.value,
+      password: this.partnerForm.get('password')!.value,
       roles: ['ROLE_OWNER']
     }
-    this._placesService.getCity(this._placesService.placeSubject.value!);
     console.log(post);
   }
 }
