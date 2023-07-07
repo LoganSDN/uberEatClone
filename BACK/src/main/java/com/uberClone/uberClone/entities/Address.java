@@ -21,8 +21,13 @@ public class Address {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JsonIgnore
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    @JoinColumn(name = "address_res_id", referencedColumnName = "id")
     private Restaurant restaurant;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
+    @JoinColumn(name = "address_user_id", referencedColumnName = "id")
+    private User user;
 
     public Address(String street, String city, String ZIP) {
         this.street = street;

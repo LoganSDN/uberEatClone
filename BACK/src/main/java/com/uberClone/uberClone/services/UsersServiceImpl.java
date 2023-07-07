@@ -1,5 +1,6 @@
 package com.uberClone.uberClone.services;
 
+import com.uberClone.uberClone.entities.Address;
 import com.uberClone.uberClone.entities.Role;
 import com.uberClone.uberClone.entities.User;
 import com.uberClone.uberClone.repositories.RoleRepository;
@@ -27,10 +28,8 @@ public class UsersServiceImpl implements UsersService {
     @Transactional
     public User createUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
         Set<Role> roles = new HashSet<>();
         for (Role role : user.getRoles()) {
-            System.out.println(role.getName());
             Role existingRole = roleRepository.findByName(role.getName()).orElse(null);
             System.out.println(existingRole);
             if (existingRole != null) {
@@ -38,7 +37,17 @@ public class UsersServiceImpl implements UsersService {
             }
         }
         user.setRoles(roles);
-        System.out.println("hello world" + user.getRoles());
+        Address address = new Address();
+        if (user.getAddress() != null) {
+            address.setStreet(user.getAddress().getStreet());
+            address.setCity(user.getAddress().getCity());
+            address.setZIP(user.getAddress().getZIP());
+            address.setUser(user);
+            user.setAddress(address);
+        }
+        else {
+            user.setAddress(null);
+        }
         return userRepository.save(user);
     }
 

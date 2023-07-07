@@ -26,6 +26,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { InscriptionComponent } from './components/inscription/inscription.component';
 import { AllRestaurantsComponent } from './view/all-restaurants/all-restaurants.component';
 import { ProfileComponent } from './view/profile/profile.component';
+import { NewPartnerComponent } from './view/new-partner/new-partner.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { DriverProfileComponent } from './view/driver-profile/driver-profile.component';
+import { SignupDriverComponent } from './view/signup-driver/signup-driver.component';
+import { PlacesComponent } from './components/places/places.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +47,10 @@ import { ProfileComponent } from './view/profile/profile.component';
     InscriptionComponent,
     AllRestaurantsComponent,
     ProfileComponent,
+    NewPartnerComponent,
+    DriverProfileComponent,
+    SignupDriverComponent,
+    PlacesComponent,
   ],
   imports: [
     MatButtonModule,
@@ -56,7 +65,8 @@ import { ProfileComponent } from './view/profile/profile.component';
     ReactiveFormsModule,
     HttpClientModule,
     MatSnackBarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatAutocompleteModule
   ],
   providers: [HttpClientModule],
   bootstrap: [AppComponent]

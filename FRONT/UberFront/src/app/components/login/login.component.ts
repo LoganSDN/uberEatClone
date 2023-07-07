@@ -42,8 +42,6 @@ export class LoginComponent {
       });
     } finally {
       this.loading = false;
-      console.log('finally');
-      console.log(this.tokenResponse);
       if (this.tokenResponse) {
         this._authService.token = this.tokenResponse.accessToken;
         const decodedToken: DecodedTokenI = this._jwtService.decodeToken(this.tokenResponse.accessToken);

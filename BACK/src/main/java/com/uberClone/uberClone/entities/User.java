@@ -25,10 +25,15 @@ public class User implements UserDetails {
         private String lastName;
         private String email;
         private String password;
+        private String phoneNumber;
 
         // Be aware of mappedBy => /!\ Must have the SAME NAME as the field in Orders entity
         @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
         private List<Order> orderList;
+
+        @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+//    @JsonIgnore
+        private Address address;
 
         @ManyToMany(cascade = CascadeType.ALL)
         @JoinTable(

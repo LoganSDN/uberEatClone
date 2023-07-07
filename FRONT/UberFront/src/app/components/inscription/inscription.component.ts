@@ -24,7 +24,7 @@ export class InscriptionComponent {
   }
 
   async onSubmit() {
-    const newUser = await lastValueFrom(this._apiCallService.post('/api/users/add', this.signUpForm.value))
+    const newUser = await lastValueFrom(this._apiCallService.post('/api/users/add',{ ...this.signUpForm.value, roles: ['ROLE_CUSTOMER']}))
     console.log(newUser);
   }
 }

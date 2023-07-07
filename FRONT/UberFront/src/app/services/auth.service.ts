@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UserI } from '../interfaces/user';
 import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +15,7 @@ export class AuthService {
   token$ = this._tokenSubject.asObservable();
   user$ = this._userSubject.asObservable();
 
-  constructor() {
-    console.log('auth service constructor');
-    console.log(localStorage.getItem('token') as string | undefined)
+  constructor(private _router: Router) {
     this._tokenSubject.next(localStorage.getItem('token') as string | undefined);
     this._isLoggedSubject.next(this.isLoggedIn());
   }
@@ -27,7 +26,7 @@ export class AuthService {
 
   set isLogged(value: boolean) {
     this._isLoggedSubject.next(value);
-  }
+    }
 
   get token(): string | undefined {
     return this._tokenSubject.value;
@@ -52,5 +51,13 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     return !!this.token;
+  }
+
+  logout(): void {
+    this.token = undefined;
+    this.user = undefined;
+    this.isLogged = false;
+    window.localStorage.removeItem('token');
+    this._router.navigate(['/']);
   }
 }

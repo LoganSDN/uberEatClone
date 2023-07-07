@@ -35,4 +35,8 @@ export class SidebarComponent {
     document.body.style.marginLeft = '0';
     document.body.style.backgroundColor = 'white';
   }
+
+  logout() {
+    this._authService.logout();
+  }
 }

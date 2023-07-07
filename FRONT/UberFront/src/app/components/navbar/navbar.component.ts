@@ -21,4 +21,8 @@ export class NavbarComponent {
   openNav(): void {
     this.openNavEvent.emit();
   }
+
+  logout() {
+    this._authService.logout();
+  }
 }
