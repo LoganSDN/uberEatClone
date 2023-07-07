@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Observable, startWith, map } from 'rxjs';
+import { Observable, startWith, map, Subscription } from 'rxjs';
 import Fuse from 'fuse.js';
+import { PlacesService } from 'src/app/services/places.service';
 
 @Component({
   selector: 'app-new-partner',
@@ -18,39 +19,43 @@ export class NewPartnerComponent implements OnInit {
     password: new FormControl('', Validators.required),
     phone: new FormControl('', Validators.required)
   });
+
   suggestedAddresses: string[] = [];
+
   filteredAddresses!: Observable<string[]>;
 
-  ngOnInit() {
-    this.filteredAddresses = this.partnerForm.get('address')!.valueChanges.pipe(
-      startWith(''),
-      map(value => this.getAddressSuggestions(value as string))
-    );
+  @ViewChild('addressText') addressText!: ElementRef;
+
+  protected placeSubscription!: Subscription;
+
+  constructor(private _placesService: PlacesService) { }
+
+  ngAfterViewInit(): void {
+    this._placesService.getPlaceAutocomplete(this.addressText);
   }
 
-  getAddressSuggestions(address: string): string[] {
-    const addresses = [
-      '123 Rue Principale',
-      '456 Avenue des Fleurs',
-      '789 Boulevard Central',
-      '10 Rue de la Liberté',
-      '22 Rue du Commerce'
-    ];
+  onAddressChange(): void {
+    this.placeSubscription =
+      this._placesService.placeObservable$.subscribe(
+        (place) => {
+          if (place) {
+            console.log('nouvelle adresse : ', place.formatted_address);
+          }
+        }
+      );
+  }
 
-    const options = {
-      includeScore: true,
-      threshold: 0.4,
-      keys: ['address']
-    };
+  ngOnInit() {
+    this.partnerForm.get('address')!.valueChanges.pipe(
+      startWith(''),
+      map(value => this.getAddressSuggestions(value as string))
+    ).subscribe();
+  }
 
-    const fuse = new Fuse(addresses.map(a => ({ address: a })), options);
-
-    const results = fuse.search(address);
-    const bestMatches = results.map(result => result.item.address);
-
-    this.suggestedAddresses = bestMatches;
-
-    return this.suggestedAddresses;
+  getAddressSuggestions(address: string): void {
+    this._placesService.getPlaceSuggestions(address).subscribe(suggestedAddresses => {
+      this.suggestedAddresses = suggestedAddresses;
+    });
   }
 
   submit() {
@@ -58,6 +63,7 @@ export class NewPartnerComponent implements OnInit {
       ...this.partnerForm.value,
       roles: ['ROLE_OWNER']
     }
+    this._placesService.getCity(this._placesService.placeSubject.value!);
     console.log(post);
   }
 }

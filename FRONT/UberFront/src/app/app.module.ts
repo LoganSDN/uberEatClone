@@ -30,7 +30,6 @@ import { NewPartnerComponent } from './view/new-partner/new-partner.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { DriverProfileComponent } from './view/driver-profile/driver-profile.component';
 import { SignupDriverComponent } from './view/signup-driver/signup-driver.component';
-import { PlacesComponent } from './components/places/places.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +49,6 @@ import { PlacesComponent } from './components/places/places.component';
     NewPartnerComponent,
     DriverProfileComponent,
     SignupDriverComponent,
-    PlacesComponent,
   ],
   imports: [
     MatButtonModule,

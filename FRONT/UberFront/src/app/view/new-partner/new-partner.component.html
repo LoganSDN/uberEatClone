@@ -27,12 +27,12 @@
 				<mat-label>Adresse</mat-label>
 				<input matInput placeholder="Votre adresse" formControlName="address" [matAutocomplete]="auto" />
 				<mat-autocomplete #auto="matAutocomplete">
-					<mat-option *ngFor="let suggestion of filteredAddresses | async" [value]="suggestion">
+					<mat-option *ngFor="let suggestion of suggestedAddresses" [value]="suggestion">
 						{{ suggestion }}
 					</mat-option>
 				</mat-autocomplete>
 			</mat-form-field>
-
+			<input type="text" (input)="onAddressChange()" #addressText />
 			<mat-form-field>
 				<mat-label>Nom du restaurant</mat-label>
 				<input matInput placeholder="Nom du restaurant" formControlName="restaurantName" required />
