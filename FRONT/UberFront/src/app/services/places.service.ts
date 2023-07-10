@@ -22,7 +22,7 @@ export class PlacesService {
     };
     return new Observable<string[]>(observer => {
       autocompleteService.getPlacePredictions(request, predictions => {
-        observer.next(predictions?.map(prediction => prediction.description));
+        observer.next(predictions.map(prediction => prediction.description));
         observer.complete();
       });
     });
