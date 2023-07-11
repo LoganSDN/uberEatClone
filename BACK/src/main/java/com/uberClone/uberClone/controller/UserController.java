@@ -1,6 +1,8 @@
 package com.uberClone.uberClone.controller;
 
+import com.uberClone.uberClone.entities.Role;
 import com.uberClone.uberClone.entities.User;
+import com.uberClone.uberClone.services.interfaces.DeliveryService;
 import com.uberClone.uberClone.services.interfaces.UsersService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -27,6 +29,8 @@ public class UserController {
     @Autowired
     private UsersService userService;
 
+    @Autowired
+    private DeliveryService deliveryService;
     @GetMapping("/all")
     @RolesAllowed("ROLE_ADMIN")
     public ResponseEntity<List<User>> getUsers() {
@@ -52,6 +56,12 @@ public class UserController {
         if (user.equals(null)) {
             throw new ServerException("Unable to create user");
         } else {
+            for (Role role :
+                 user.getRoles()) {
+                if (role.getName().equals("ROLE_DRIVER")) {
+                    deliveryService.createDelivery(user);
+                }
+            }
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         }
     }

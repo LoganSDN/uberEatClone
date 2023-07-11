@@ -35,6 +35,10 @@ public class User implements UserDetails {
 //    @JsonIgnore
         private Address address;
 
+        @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+//    @JsonIgnore
+        private Delivery delivery;
+
         @ManyToMany(cascade = CascadeType.ALL)
         @JoinTable(
                 name = "users_roles",
