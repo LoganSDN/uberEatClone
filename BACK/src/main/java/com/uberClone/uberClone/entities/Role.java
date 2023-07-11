@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "roles")
 @Getter
@@ -31,5 +33,4 @@ public class Role {
     public String toString() {
         return this.name;
     }
-
 }

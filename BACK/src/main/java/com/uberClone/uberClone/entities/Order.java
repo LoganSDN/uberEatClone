@@ -37,6 +37,10 @@ public class Order {
     @JsonIgnore
     private Restaurant restaurant;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "delivery_id", referencedColumnName= "id")
+    private Delivery delivery;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "order_product",
