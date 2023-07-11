@@ -1,10 +1,7 @@
 package com.uberClone.uberClone.config.Websocket;
 
-import com.uberClone.uberClone.controller.Websocket.Communication.OutputMessage.OutputMessageDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.event.EventListener;
-import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.SubProtocolCapable;

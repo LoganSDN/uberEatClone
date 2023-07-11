@@ -1,6 +1,6 @@
 //package com.uberClone.uberClone.config.Websocket;
 //
-//import com.uberClone.uberClone.controller.Websocket.Communication.OutputMessage.OutputMessageDto;
+//import com.uberClone.uberClone.dtos.OutputMessageDto;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
 //import org.springframework.security.config.annotation.web.socket.EnableWebSocketSecurity;
