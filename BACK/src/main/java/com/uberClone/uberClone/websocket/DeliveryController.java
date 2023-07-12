@@ -11,8 +11,8 @@ public class DeliveryController {
 
     @MessageMapping("/dely")
     @SendTo("/topic/message")
-    public OutputMessageDto simpleMessage(InputMessageDto msg) throws Exception{
+    public String simpleMessage(InputMessageDto msg) throws Exception{
         System.out.println("Message was " + msg.getTxt());
-        return new OutputMessageDto(msg.getTxt());
+        return msg.getTxt();
     }
 }

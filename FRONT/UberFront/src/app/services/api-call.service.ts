@@ -26,7 +26,7 @@ export class APICallService {
   }
 
   post(url: string, body: any) {
-    return this._httpClient.post(url, body);
+    return this._httpClient.post(url, body,  { headers: this._header ? this._header : new HttpHeaders()});
   }
 
   put(url: string, body: any) {

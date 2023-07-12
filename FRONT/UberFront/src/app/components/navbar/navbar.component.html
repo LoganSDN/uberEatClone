@@ -18,7 +18,38 @@
 		<button class="pill black" routerLink="/sign-up">Inscription</button>
 	</div>
 	<ng-template #logged>
-		<div class="d-flex flex-row align-items-center gap-2">
+		<div class="d-flex flex-row align-items-center gap-3">
+			<button mat-icon-button class="cart-btn" [matMenuTriggerFor]="menu">
+				<mat-icon>shopping_cart</mat-icon>
+				<span class="notification" *ngIf="productsList.length > 0">
+					 {{ productsList.length }}
+				</span>
+			</button>
+			<mat-menu #menu="matMenu" xPosition="before">
+				<ng-container  *ngIf="productsList.length > 0 else no_product" class="d-flex justify-content-center">
+					<span mat-menu-content *ngFor="let product of productsList" class="d-flex flex-column gap-2 p-3 align-items-center justify-content-around">
+						<div class="d-flex flex-row align-items-center gap-3">
+							<div>
+								<p style="margin: 0; padding: 0;">{{product.name}}</p>
+								<small><i>{{product.price}} €</i></small>
+							</div>
+							<button mat-icon-button (click)="removeFromCart(product)"><mat-icon>delete</mat-icon></button>
+						</div>
+						<mat-divider class="w-100"></mat-divider>
+					</span>
+					<div class="d-flex justify-content-center">
+						<button mat-raised-button routerLink="/cart">Voir panier</button>
+					</div>
+				</ng-container>
+				<ng-template #no_product>
+					<span mat-menu-content class="d-flex flex-column gap-2 p-3 align-items-center justify-content-around">
+						<div class="d-flex flex-row align-items-center gap-2">
+							Panier vide
+							<mat-icon>remove_shopping_cart</mat-icon>
+						</div>
+					</span>
+				</ng-template>
+			  </mat-menu>
 			<button class="pill white" routerLink="/profile">
 				<i class="fas fa-user" style="margin-right: 0.5em;"></i>
 				Profil
