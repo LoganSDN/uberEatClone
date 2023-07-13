@@ -1,0 +1,22 @@
+/* styles.scss */
+.container {
+	padding: 20px;
+  }
+  
+  .cart-items {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	gap: 20px;
+  }
+  
+  .cart-item {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+  }
+  
+  .price {
+	font-weight: bold;
+	margin-top: 10px;
+  }
+  

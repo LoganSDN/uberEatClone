@@ -8,6 +8,8 @@ import { ProfileComponent } from './view/profile/profile.component';
 import { NewPartnerComponent } from './view/new-partner/new-partner.component';
 import { DriverProfileComponent } from './view/driver-profile/driver-profile.component';
 import { SignupDriverComponent } from './view/signup-driver/signup-driver.component';
+import { OneRestaurantComponent } from './view/one-restaurant/one-restaurant.component';
+import { CartComponent } from './view/cart/cart.component';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
@@ -19,6 +21,9 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent},
   { path: 'driver-profile', component: DriverProfileComponent},
   { path: 'driver-signup', component: SignupDriverComponent},
+  { path: 'restaurant-details', component: OneRestaurantComponent },
+  { path: 'cart', component: CartComponent },
+  { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({

@@ -45,6 +45,7 @@ export class LoginComponent {
       if (this.tokenResponse) {
         this._authService.token = this.tokenResponse.accessToken;
         const decodedToken: DecodedTokenI = this._jwtService.decodeToken(this.tokenResponse.accessToken);
+        console.log(decodedToken.user)
         this._authService.user = decodedToken.user
         this._authService.isLogged = true;
         this._snackBar.open('Vous êtes connecté', 'OK', {

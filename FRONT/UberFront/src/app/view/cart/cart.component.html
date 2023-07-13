@@ -1,0 +1,24 @@
+<div class="container">
+	<h1>Votre panier</h1>
+	<div class="cart-items">
+		<mat-card *ngFor="let product of productList" class="cart-item">
+			<mat-card-content>
+				<h3>{{ product.name }}</h3>
+				<p>{{ product.description }}</p>
+				<p class="price">{{ product.price }} €</p>
+			</mat-card-content>
+			<mat-card-actions>
+				<button mat-icon-button color="primary" (click)="removeFromCart(product)">
+					<mat-icon>delete</mat-icon>
+				</button>
+			</mat-card-actions>
+		</mat-card>
+	</div>
+	<div class="cart-total">
+		<p>Total : {{ getTotal() }} €</p>
+	</div>
+	<div class="cart-actions">
+		<button mat-raised-button color="primary" (click)="clearCart()">Vider le panier</button>
+		<button mat-raised-button color="primary" (click)="checkout()">Commander</button>
+	</div>
+</div>

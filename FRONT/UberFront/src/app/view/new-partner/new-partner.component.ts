@@ -49,13 +49,19 @@ export class NewPartnerComponent implements OnInit {
 
   private _parseAddress(address: string) {
     const addrProperties: string[] = address.split(',');
-    console.log(addrProperties);
-    const res = {
-      street: addrProperties[0]?.trim(),
-      city: addrProperties[1]?.trim(),
-      // ZIP: addrProperties[2], // TO CHANGE
-    }
-    return res;
+    this._placesService.geocodeAddress(address).subscribe(coords => {
+      const res = {
+        street: addrProperties[0],
+        city: addrProperties[1],
+        lat: coords.lat,
+        lng: coords.lng,
+        // ZIP: addrProperties[2], // TO CHANGE
+      }
+      console.log(res);
+      return res;
+    }, error => {
+      console.error('Error geocoding address', error);
+    });
   }
 
   async submit() {
