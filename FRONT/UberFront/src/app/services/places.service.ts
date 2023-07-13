@@ -9,6 +9,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 export class PlacesService {
   public placeSubject: BehaviorSubject<google.maps.places.PlaceResult | undefined> = new BehaviorSubject<google.maps.places.PlaceResult | undefined>(undefined);
   public placeObservable$ = this.placeSubject.asObservable();
+  private geocoder = new google.maps.Geocoder();
   
   constructor() { }
 
@@ -24,6 +25,22 @@ export class PlacesService {
       autocompleteService.getPlacePredictions(request, predictions => {
         observer.next(predictions.map(prediction => prediction.description));
         observer.complete();
+      });
+    });
+  }
+  
+  geocodeAddress(address: string): Observable<{ lat: number, lng: number }> {
+    return new Observable<{ lat: number, lng: number }>(observer => {
+      this.geocoder.geocode({ 'address': address }, (results, status) => {
+        if (status === google.maps.GeocoderStatus.OK) {
+          observer.next({
+            lat: results[0].geometry.location.lat(),
+            lng: results[0].geometry.location.lng()
+          });
+          observer.complete();
+        } else {
+          observer.error('Geocoding failed: ' + status);
+        }
       });
     });
   }

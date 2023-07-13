@@ -30,6 +30,10 @@ import { NewPartnerComponent } from './view/new-partner/new-partner.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { DriverProfileComponent } from './view/driver-profile/driver-profile.component';
 import { SignupDriverComponent } from './view/signup-driver/signup-driver.component';
+import { OneRestaurantComponent } from './view/one-restaurant/one-restaurant.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { CartComponent } from './view/cart/cart.component';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -49,6 +53,8 @@ import { SignupDriverComponent } from './view/signup-driver/signup-driver.compon
     NewPartnerComponent,
     DriverProfileComponent,
     SignupDriverComponent,
+    OneRestaurantComponent,
+    CartComponent,
   ],
   imports: [
     MatButtonModule,
@@ -64,7 +70,9 @@ import { SignupDriverComponent } from './view/signup-driver/signup-driver.compon
     HttpClientModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatMenuModule,
+    MatCardModule
   ],
   providers: [HttpClientModule],
   bootstrap: [AppComponent]

@@ -18,6 +18,8 @@ public class Address {
     private String street;
     private String city;
     private String ZIP;
+    private Long lat;
+    private Long lng;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JsonIgnore
@@ -29,10 +31,12 @@ public class Address {
     @JoinColumn(name = "address_user_id", referencedColumnName = "id")
     private User user;
 
-    public Address(String street, String city, String ZIP) {
+    public Address(String street, String city, String ZIP, Long lat, Long lng) {
         this.street = street;
         this.city = city;
         this.ZIP = ZIP;
+        this.lat = lat;
+        this.lng = lng;
     }
 
     @Override
@@ -42,6 +46,8 @@ public class Address {
                 ", street='" + street + '\'' +
                 ", city='" + city + '\'' +
                 ", ZIP='" + ZIP + '\'' +
+                ", lat='" + lat + '\'' +
+                ", lng='" + lng + '\'' +
                 '}';
     }
 }

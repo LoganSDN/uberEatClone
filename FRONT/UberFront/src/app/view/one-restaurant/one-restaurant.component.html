@@ -1,0 +1,48 @@
+<div class="restaurant-details">
+	<div class="restaurant-image">
+		<img [src]="restaurant?.image ? restaurant?.image : '../../../assets/img/restaurant_example.jpg'"
+			alt="Restaurant Image">
+	</div>
+	<div class="restaurant-info">
+		<div>
+			<h2>{{ restaurant?.name }}</h2>
+			<p>{{ restaurant?.description }}</p>
+			<p class="restaurant-location">
+				{{ restaurant?.address?.street }}<br>
+				{{restaurant?.address?.city}}<br>
+				{{restaurant?.address?.ZIP}}
+			</p>
+		</div>
+		<h3>Heures d'ouverture</h3>
+		<table class="opening-hours">
+			<tr>
+				<td>{{ restaurant?.openingTime }}</td>
+				<td>{{ restaurant?.closingTime }}</td>
+			</tr>
+		</table>
+		<h3>Menu(s)</h3>
+		<ul class="menu-items">
+			<li *ngFor="let menu of restaurant?.menus">
+				<h3>{{menu.name}}</h3>
+				<ul class="products-item">
+					<li *ngFor="let product of menu.productsList">
+						<div class="product-info">
+							<div>
+								<h2>
+									{{product.name}}
+								</h2>
+								<p>
+									{{product.description}}
+								</p>
+								<p>
+									{{product.price}} €
+								</p>
+							</div>
+							<button mat-icon-button (click)="addToShoppingCart(product)"><mat-icon>add_shopping_cart</mat-icon></button>
+						</div>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
