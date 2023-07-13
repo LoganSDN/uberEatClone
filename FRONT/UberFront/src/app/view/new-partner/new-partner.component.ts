@@ -1,8 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Observable, startWith, map, Subscription } from 'rxjs';
+import { Observable, startWith, map, Subscription, lastValueFrom } from 'rxjs';
 import Fuse from 'fuse.js';
 import { PlacesService } from 'src/app/services/places.service';
+import { APICallService } from 'src/app/services/api-call.service';
 
 @Component({
   selector: 'app-new-partner',
@@ -27,7 +28,8 @@ export class NewPartnerComponent implements OnInit {
 
   protected placeSubscription!: Subscription;
 
-  constructor(private _placesService: PlacesService) { }
+  constructor(private _placesService: PlacesService,
+              private _apiCallService: APICallService) { }
 
   ngAfterViewInit(): void {
   }
@@ -62,8 +64,7 @@ export class NewPartnerComponent implements OnInit {
     });
   }
 
-  submit() {
-    this._parseAddress(this.partnerForm.get('address')!.value as string);
+  async submit() {
     const post = {
       address: this._parseAddress(this.partnerForm.get('address')!.value as string),
       restaurantName: this.partnerForm.get('restaurantName')!.value,
@@ -73,6 +74,6 @@ export class NewPartnerComponent implements OnInit {
       password: this.partnerForm.get('password')!.value,
       roles: ['ROLE_OWNER']
     }
-    console.log(post);
+    await lastValueFrom(this._apiCallService.post('users', post));
   }
 }
