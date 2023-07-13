@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserI } from '../interfaces/user';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+import { JwtService } from './jwt.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,10 @@ export class AuthService {
   token$ = this._tokenSubject.asObservable();
   user$ = this._userSubject.asObservable();
 
-  constructor(private _router: Router) {
+  constructor(private _router: Router,
+              private _jwtService: JwtService) {
     this._tokenSubject.next(localStorage.getItem('token') as string | undefined);
+    this._userSubject.next(this._jwtService.decodeToken(this.token as string)?.user);
     this._isLoggedSubject.next(this.isLoggedIn());
   }
 

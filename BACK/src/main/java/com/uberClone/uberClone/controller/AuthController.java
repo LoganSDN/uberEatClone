@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200/")
+@CrossOrigin(allowCredentials = "true", origins = "http://localhost:4200/")
 public class AuthController {
     @Autowired
     AuthenticationManager authManager;

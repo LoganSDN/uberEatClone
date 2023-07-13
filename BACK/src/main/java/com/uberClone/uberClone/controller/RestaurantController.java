@@ -32,7 +32,7 @@ public class RestaurantController {
     @PostMapping(path = "/add",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    @RolesAllowed("ROLE_ADMIN")
+//    @RolesAllowed("ROLE_ADMIN")
     public ResponseEntity<Restaurant> createRestaurant(@RequestBody Restaurant restaurant) {
         return restaurantsService.createRestaurant(restaurant);
     }

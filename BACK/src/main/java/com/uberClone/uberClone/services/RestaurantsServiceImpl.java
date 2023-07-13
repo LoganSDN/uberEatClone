@@ -20,19 +20,21 @@ public class RestaurantsServiceImpl implements RestaurantsService {
 
     @Override
     public ResponseEntity<Restaurant> createRestaurant(Restaurant newRestaurant) {
-        Restaurant restaurant = new Restaurant();
-        restaurant.setOrders(new ArrayList<>());
-        restaurant.setName(newRestaurant.getName());
-        restaurant.setOpeningTime(newRestaurant.getOpeningTime());
-        restaurant.setClosingTime(newRestaurant.getClosingTime());
+//        Restaurant restaurant = new Restaurant();
+//        restaurant.setOrders(new ArrayList<>());
+//        restaurant.setName(newRestaurant.getName());
+//        restaurant.setOpeningTime(newRestaurant.getOpeningTime());
+//        restaurant.setClosingTime(newRestaurant.getClosingTime());
         Address address = new Address();
         address.setStreet(newRestaurant.getAddress().getStreet());
         address.setCity(newRestaurant.getAddress().getCity());
         address.setZIP(newRestaurant.getAddress().getZIP());
-        address.setRestaurant(restaurant);
-        restaurant.setAddress(address);
+        address.setLat(newRestaurant.getAddress().getLat());
+        address.setLng(newRestaurant.getAddress().getLng());
+        address.setRestaurant(newRestaurant);
+        newRestaurant.setAddress(address);
 
-        Restaurant createdRestaurant = restaurantRepository.save(restaurant);
+        Restaurant createdRestaurant = restaurantRepository.save(newRestaurant);
         return new ResponseEntity<>(createdRestaurant, HttpStatus.CREATED);
     }
 
