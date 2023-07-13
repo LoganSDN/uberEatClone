@@ -1,14 +1,16 @@
 package com.uberClone.uberClone.services;
 
-import com.uberClone.uberClone.entities.Address;
-import com.uberClone.uberClone.entities.Role;
-import com.uberClone.uberClone.entities.User;
+import com.uberClone.uberClone.entities.*;
+//import com.uberClone.uberClone.repositories.DriverViewRepository;
+import com.uberClone.uberClone.repositories.DriverViewRepository;
 import com.uberClone.uberClone.repositories.RoleRepository;
 import com.uberClone.uberClone.repositories.UserRepository;
 import com.uberClone.uberClone.services.interfaces.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +25,15 @@ public class UsersServiceImpl implements UsersService {
     RoleRepository roleRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    DriverViewRepository driverViewRepository;
+    private final SimpMessagingTemplate simpMessagingTemplate;
+
+    public UsersServiceImpl(SimpMessagingTemplate simpMessagingTemplate) {
+        this.simpMessagingTemplate = simpMessagingTemplate;
+    }
+
 
     @Override
     @Transactional
@@ -71,4 +82,10 @@ public class UsersServiceImpl implements UsersService {
         return this.userRepository.findById(id).orElse(null);
     }
 
+    public void findDriverForOrder(Order order){
+        List<DriverView> drivers= this.driverViewRepository.findAll();
+//        parse to find closest / date mes couills
+//        send websockmsg to usr
+        drivers.forEach((d)-> System.out.println(d.toString()));
+    }
 }

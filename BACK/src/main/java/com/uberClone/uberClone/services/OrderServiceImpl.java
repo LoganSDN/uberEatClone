@@ -6,19 +6,18 @@ import com.uberClone.uberClone.entities.Restaurant;
 import com.uberClone.uberClone.entities.User;
 import com.uberClone.uberClone.repositories.OrdersRepository;
 import com.uberClone.uberClone.repositories.ProductRepository;
-import com.uberClone.uberClone.services.interfaces.OrdersService;
+import com.uberClone.uberClone.services.interfaces.OrderService;
 import com.uberClone.uberClone.services.interfaces.RestaurantsService;
 import com.uberClone.uberClone.services.interfaces.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class OrdersServiceImpl implements OrdersService {
+public class OrderServiceImpl implements OrderService {
     @Autowired
     OrdersRepository ordersRepository;
 

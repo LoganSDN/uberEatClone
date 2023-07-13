@@ -61,9 +61,9 @@ public class WebSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurity
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.authorizeHttpRequests().anyRequest().permitAll()
-//                .anyRequest().authenticated();
-;
+        http.authorizeHttpRequests().requestMatchers("/auth/login", "/users/add").permitAll()
+                .anyRequest().authenticated();
+
         http.exceptionHandling().authenticationEntryPoint((request, response, ex) -> {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
         });
