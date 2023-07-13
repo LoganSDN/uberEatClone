@@ -1,5 +1,6 @@
 package com.uberClone.uberClone.services.interfaces;
 
+import com.uberClone.uberClone.entities.Order;
 import com.uberClone.uberClone.entities.User;
 
 import java.util.List;
@@ -10,4 +11,5 @@ public interface UsersService {
     void deleteUser(String id);
     List<User> getAllUsers();
     User getUsersById(Long id);
+    void findDriverForOrder(Order order);
 }

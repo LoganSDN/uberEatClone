@@ -5,7 +5,7 @@ import com.uberClone.uberClone.entities.User;
 
 import java.util.List;
 
-public interface OrdersService {
+public interface OrderService {
     Order createOrder(Order order);
     void updateOrder(String id, Order order);
     void cancelOrder(String id);

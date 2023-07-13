@@ -1,25 +1,17 @@
 package com.uberClone.uberClone.controller;
 
-import com.uberClone.uberClone.entities.Role;
 import com.uberClone.uberClone.entities.User;
-import com.uberClone.uberClone.services.interfaces.DeliveryService;
 import com.uberClone.uberClone.services.interfaces.UsersService;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.rmi.ServerException;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -29,8 +21,6 @@ public class UserController {
     @Autowired
     private UsersService userService;
 
-    @Autowired
-    private DeliveryService deliveryService;
     @GetMapping("/all")
     @RolesAllowed("ROLE_ADMIN")
     public ResponseEntity<List<User>> getUsers() {
@@ -56,12 +46,6 @@ public class UserController {
         if (user.equals(null)) {
             throw new ServerException("Unable to create user");
         } else {
-            for (Role role :
-                 user.getRoles()) {
-                if (role.getName().equals("ROLE_DRIVER")) {
-                    deliveryService.createDelivery(user);
-                }
-            }
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         }
     }

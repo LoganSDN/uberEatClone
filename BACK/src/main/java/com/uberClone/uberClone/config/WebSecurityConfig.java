@@ -63,7 +63,7 @@ public class WebSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurity
 
         http.authorizeHttpRequests().requestMatchers("/users/add", "/auth/login").permitAll()
                 .anyRequest().authenticated();
-;
+
         http.exceptionHandling().authenticationEntryPoint((request, response, ex) -> {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
         });
