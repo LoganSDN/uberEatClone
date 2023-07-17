@@ -1,6 +1,10 @@
 package com.uberClone.uberClone.jwt;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import com.uberClone.uberClone.entities.Role;
 import com.uberClone.uberClone.entities.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -55,8 +59,28 @@ public class JwtTokenUtil {
         return false;
     }
 
+    private boolean isRoleValid(String token, String role){
+        System.out.println("roles :" + this.getRoles(token));
+        if (this.getRoles(token).contains(role))
+                return true;
+        return false;
+    }
+    public boolean validateAccessTokenWebSocket(String token){
+        System.out.println("C'est quoi cette connerie encore");
+        if (!this.validateAccessToken(token) ||
+               !this.isRoleValid(token, "ROLE_DRIVER")){
+            System.out.println("Token was Wrong for: " + this.validateAccessToken(token) +this.isRoleValid(token, "ROLE_DRIVER") );
+            return false;
+        }
+        return true;
+    }
+
     public String getSubject(String token) {
         return parseClaims(token).getSubject();
+    }
+
+    public String getRoles(String token){
+        return parseClaims(token).get("roles",String.class);
     }
 
     public Claims parseClaims(String token) {

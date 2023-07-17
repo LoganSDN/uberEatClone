@@ -27,6 +27,7 @@ dependencies {
 
 	// Spring Boot WebSocket Starter
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation 'org.springframework.session:spring-session-core:3.1.1'
 
 	// WebSocket messaging with SockJS fallback
 	implementation 'org.webjars:sockjs-client:1.0.2'

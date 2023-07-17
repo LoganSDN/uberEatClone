@@ -2,25 +2,35 @@ package com.uberClone.uberClone.websocket;
 
 import com.uberClone.uberClone.dtos.InputMessageDto;
 import com.uberClone.uberClone.dtos.OrderDto;
-import com.uberClone.uberClone.dtos.OutputMessageDto;
+import com.uberClone.uberClone.entities.User;
+import com.uberClone.uberClone.jwt.JwtTokenUtil;
+import com.uberClone.uberClone.services.interfaces.UsersService;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.WebSocketSession;
 
-import java.net.Socket;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.io.IOException;
+import java.net.http.WebSocket;
+import java.util.Map;
+import java.util.Optional;
 
 @Controller
 public class DeliveryController {
     private final SimpMessagingTemplate simpMessagingTemplate;
-    private Set<String> userlist = new HashSet<>();
 
+    @Autowired
+    private UsersService usersService;
+    @Autowired
+    JwtTokenUtil jwtTokenUtil;
+
+//    @Autowired
+//    WebSocketRegistryListener webSocketRegistryListener;
     public DeliveryController(SimpMessagingTemplate simpMessagingTemplate) {
         this.simpMessagingTemplate = simpMessagingTemplate;
     }
@@ -33,14 +43,18 @@ public class DeliveryController {
     }
 
     @MessageMapping("/connect")
-    public void onConnectionDeliveryUpdate(@Header("simpSessionId") String sessionId){
-        userlist.add(sessionId);
-        userlist.forEach(name -> {
-            if (!name.equals(sessionId)) {
-            System.out.println("Session ID: " + sessionId + " sending to " + name);
-                 this.simpMessagingTemplate.convertAndSendToUser(name,"/bite",sessionId +" Connected");
-//                this.simpMessagingTemplate.convertAndSend("/user/"+name, "");
-            }});
+    @RolesAllowed("ROLE_DRIVER")
+    public void onConnectionDeliveryUpdate(@Header("simpSessionId") String sessionId,@Header("authorization") String tokenHeader, String token) throws IOException {
+//        this.usersServce.updateUser()i
+        token = token.replace('\"',' ').trim();
+    System.out.println("Header Token = : "+ tokenHeader);
+//        WebSocketSession session = simpMessagingTemplate.getW;
+        System.out.println("Token :"+ token);
+        if (!this.jwtTokenUtil.validateAccessTokenWebSocket(token)){
+            ;
+          System.out.println("Wrong Token =  in connect" + token);
+        }
+//        System.out.println("Right Token =  in connect" + this.jwtTokenUtil.getRoles(token));
     }
 
     @MessageMapping("/accept")

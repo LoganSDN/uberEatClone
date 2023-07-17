@@ -1,9 +1,11 @@
 package com.uberClone.uberClone.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import org.hibernate.annotations.Immutable;
-import org.springframework.data.jpa.repository.Query;
 
 
 @Getter
@@ -25,6 +27,10 @@ public class DriverView {
 
     @Column(name = "phone_number")
     private String phoneNumber;
+
+    @Column(name = "socket_id")
+    private String socketId;
+
 
     @Override
     public String toString() {
