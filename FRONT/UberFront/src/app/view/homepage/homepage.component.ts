@@ -10,14 +10,14 @@ export class HomepageComponent {
   constructor(private websocketService: WebSocketService) { }
 
   connect() {
-    this.websocketService.connect();
+    // this.websocketService.connect();
   }
 
   disconnect() {
-    this.websocketService.disconnect();
+    // this.websocketService.disconnect();
   }
 
   send() {
-    this.websocketService.send("/app/dely", "hello");
+    // this.websocketService.send("/app/dely", "hello");
   }
 }

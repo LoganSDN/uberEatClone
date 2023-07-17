@@ -3,6 +3,7 @@ package com.uberClone.uberClone.websocket;
 import com.uberClone.uberClone.dtos.InputMessageDto;
 import com.uberClone.uberClone.dtos.OrderDto;
 import com.uberClone.uberClone.dtos.OutputMessageDto;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -27,6 +28,7 @@ public class DeliveryController {
 
     @MessageMapping("/dely")
     @SendTo("/topic/message")
+//    @RolesAllowed("ROLE_DRIVER")
     public String simpleMessage(InputMessageDto msg) throws Exception{
         System.out.println("Message was " + msg.getTxt());
         return msg.getTxt();

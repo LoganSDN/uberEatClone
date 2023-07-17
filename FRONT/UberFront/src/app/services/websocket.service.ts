@@ -9,58 +9,58 @@ import { UserI } from '../interfaces/user';
   providedIn: 'root'
 })
 export class WebSocketService {
-  webSocketEndPoint: string = 'http://localhost:8080/ws';
-  topic: string = "/topic/message";
-  stompClient: any;
-  user: any;
+  // webSocketEndPoint: string = 'http://localhost:8080/ws';
+  // topic: string = "/topic/message";
+  // stompClient: any;
+  // user: any;
 
-  constructor(private authService: AuthService) { 
-    this.user = this.authService.user$.subscribe();
-  }
+  // constructor(private authService: AuthService) { 
+  //   this.authService.user$.subscribe((user) =>  {if (user) this.user = user});
+  // }
 
-  connect() {
-    console.log("Initialize WebSocket Connection");
-    let ws = new SockJS(this.webSocketEndPoint);
-    this.stompClient = Stomp.over(ws);
-    this.stompClient.connect({}, () => {
-      let session = this.getSessionId(this.stompClient.ws._transport.url);
-      console.log("Session = ", session);
-      this.stompClient.subscribe("/user/" + session + "/bite", () => console.log("works"));
-        this.stompClient.send("/app/connect");
-      this.stompClient.subscribe(this.topic, (sdkEvent: any) => {
-        this.onMessageReceived(sdkEvent);
-        // this.stompClient.subscribe("/user/"+ ws.)
-      });
-    }, this.errorCallBack);
-  };
+  // connect() {
+  //   console.log("Initialize WebSocket Connection");
+  //   let ws = new SockJS(this.webSocketEndPoint);
+  //   this.stompClient = Stomp.over(ws);
+  //   this.stompClient.connect({}, () => {
+  //     let session = this.getSessionId(this.stompClient.ws._transport.url);
+  //     console.log("Session = ", session);
+  //     this.stompClient.subscribe("/user/" + session + "/bite", () => console.log("works"));
+  //       this.stompClient.send("/app/connect");
+  //     this.stompClient.subscribe(this.topic, (sdkEvent: any) => {
+  //       this.onMessageReceived(sdkEvent);
+  //       // this.stompClient.subscribe("/user/"+ ws.)
+  //     });
+  //   }, this.errorCallBack);
+  // };
 
-  disconnect() {
-    if (this.stompClient !== null) {
-      this.stompClient.disconnect();
-    }
-    console.log("Disconnected");
-  }
+  // disconnect() {
+  //   if (this.stompClient !== null) {
+  //     this.stompClient.disconnect();
+  //   }
+  //   console.log("Disconnected");
+  // }
 
-  errorCallBack(error: any) {
-    console.log("errorCallBack -> " + error)
-    setTimeout(() => {
-      this.connect();
-    }, 5000);
-  }
+  // errorCallBack(error: any) {
+  //   console.log("errorCallBack -> " + error)
+  //   setTimeout(() => {
+  //     this.connect();
+  //   }, 5000);
+  // }
 
-  send(destination: string, message: string) {
-    this.stompClient.send(destination, {}, JSON.stringify({txt: message}));
-  }
+  // send(destination: string, message: string) {
+  //   this.stompClient.send(destination, {}, JSON.stringify({txt: message}));
+  // }
   
-  getSessionId(url : string){
-    url = url.replace(
-      "ws://localhost:8080/ws/",  "");
-    url = url.replace("/websocket", "");
-    url = url.replace(/^[0-9]+\//, "");
-    return url;
-  }
+  // getSessionId(url : string){
+  //   url = url.replace(
+  //     "ws://localhost:8080/ws/",  "");
+  //   url = url.replace("/websocket", "");
+  //   url = url.replace(/^[0-9]+\//, "");
+  //   return url;
+  // }
 
-  onMessageReceived(message: any) {
-    console.log("Message Recieved from Server :: " + message.body);
-  }
+  // onMessageReceived(message: any) {
+  //   console.log("Message Recieved from Server :: " + message.body);
+  // }
 }
