@@ -12,22 +12,15 @@ export class WebSocketService {
   webSocketEndPoint: string = 'http://localhost:8080/ws';
   topic: string = "/topic/message";
   stompClient: any;
-  user: any;
-  token: String | undefined = undefined;
+  user: UserI | undefined;
+  token: string | undefined = undefined;
 
   constructor(private authService: AuthService) {
     this.authService.user$.subscribe((user) => {
-      if (user)
         this.user = user;
-      else
-        this.user = undefined
     });
     this.authService.token$.subscribe((token) => {
-      if (token) {
         this.token = token;
-      } else {
-        this.token = undefined;
-      }
     });
   }
   connect() {
@@ -39,8 +32,8 @@ export class WebSocketService {
     this.stompClient.connect({}, () => {
       let session = this.getSessionId(this.stompClient.ws._transport.url);
       console.log("Session = ", session);
-      this.stompClient.subscribe("/user/" + session + "/bite", () => console.log("works"));
-      this.stompClient.send("/app/connect",{authorization: "Bearer " + this.token},JSON.stringify(this.token));
+      this.stompClient.subscribe("/user/" + session + "/connect", (payload: any) => {if (!payload)this.disconnect()});
+      this.stompClient.send("/app/connect",{Authorization: `Bearer ${this.token}`},JSON.stringify(this.token));
     this.stompClient.subscribe(this.topic, (sdkEvent: any) => {
       this.onMessageReceived(sdkEvent);
       // this.stompClient.subscribe("/user/"+ ws.)

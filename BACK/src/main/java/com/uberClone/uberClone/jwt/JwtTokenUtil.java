@@ -1,10 +1,9 @@
 package com.uberClone.uberClone.jwt;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import com.uberClone.uberClone.entities.Role;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.uberClone.uberClone.entities.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -60,16 +59,13 @@ public class JwtTokenUtil {
     }
 
     private boolean isRoleValid(String token, String role){
-        System.out.println("roles :" + this.getRoles(token));
         if (this.getRoles(token).contains(role))
                 return true;
         return false;
     }
     public boolean validateAccessTokenWebSocket(String token){
-        System.out.println("C'est quoi cette connerie encore");
         if (!this.validateAccessToken(token) ||
                !this.isRoleValid(token, "ROLE_DRIVER")){
-            System.out.println("Token was Wrong for: " + this.validateAccessToken(token) +this.isRoleValid(token, "ROLE_DRIVER") );
             return false;
         }
         return true;
@@ -79,8 +75,18 @@ public class JwtTokenUtil {
         return parseClaims(token).getSubject();
     }
 
-    public String getRoles(String token){
-        return parseClaims(token).get("roles",String.class);
+    private List<String> _parseRoles(String rolesString) {
+            rolesString = rolesString.substring(1, rolesString.length()-1); // Remove brackets
+            rolesString = rolesString.replaceAll("'", ""); // Remove single quotes
+            List<String> roles = Arrays.asList(rolesString.split(","));
+            return roles;
+    }
+
+    public List<String> getRoles(String token){
+        return _parseRoles(parseClaims(token).get("roles", String.class));
+    }
+    public String getUsername(String token){
+        return parseClaims(token).get("user", User.class).getUsername();
     }
 
     public Claims parseClaims(String token) {
