@@ -4,6 +4,7 @@ import { Stomp } from '@stomp/stompjs';
 import { AuthService } from './auth.service';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { UserI } from '../interfaces/user';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +41,8 @@ export class WebSocketService {
       let session = this.getSessionId(this.stompClient.ws._transport.url);
       console.log("Session = ", session);
       this.stompClient.subscribe("/user/" + session + "/bite", () => console.log("works"));
-      this.stompClient.send("/app/connect",{authorization: "Bearer " + this.token},JSON.stringify(this.token));
+      const header = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+      this.stompClient.send("/app/connect",header,JSON.stringify(this.token));
     this.stompClient.subscribe(this.topic, (sdkEvent: any) => {
       this.onMessageReceived(sdkEvent);
       // this.stompClient.subscribe("/user/"+ ws.)
