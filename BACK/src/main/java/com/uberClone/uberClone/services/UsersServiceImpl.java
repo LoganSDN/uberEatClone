@@ -1,22 +1,21 @@
 package com.uberClone.uberClone.services;
 
 import com.uberClone.uberClone.entities.*;
-//import com.uberClone.uberClone.repositories.DriverViewRepository;
 import com.uberClone.uberClone.repositories.DriverViewRepository;
 import com.uberClone.uberClone.repositories.RoleRepository;
 import com.uberClone.uberClone.repositories.UserRepository;
 import com.uberClone.uberClone.services.interfaces.RestaurantsService;
 import com.uberClone.uberClone.services.interfaces.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UsersServiceImpl implements UsersService {
@@ -30,12 +29,6 @@ public class UsersServiceImpl implements UsersService {
     RestaurantsService restaurantsService;
     @Autowired
     DriverViewRepository driverViewRepository;
-    private final SimpMessagingTemplate simpMessagingTemplate;
-
-    public UsersServiceImpl(SimpMessagingTemplate simpMessagingTemplate) {
-        this.simpMessagingTemplate = simpMessagingTemplate;
-    }
-
 
     @Override
     @Transactional
@@ -91,5 +84,13 @@ public class UsersServiceImpl implements UsersService {
         drivers.forEach((d)-> {
             System.out.println(d.toString());
         });
+    }
+    public void updateStatus(String newStatus, User user){
+        user.setStatus(newStatus);
+        this.userRepository.save(user);
+    }
+
+    public Optional<User> getUserByEmail(String email){
+        return this.userRepository.findByEmail(email);
     }
 }

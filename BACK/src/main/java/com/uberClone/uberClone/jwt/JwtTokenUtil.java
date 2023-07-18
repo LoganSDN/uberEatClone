@@ -1,6 +1,9 @@
 package com.uberClone.uberClone.jwt;
 
-import java.util.Date;
+import java.util.*;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.uberClone.uberClone.entities.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -55,8 +58,35 @@ public class JwtTokenUtil {
         return false;
     }
 
+    private boolean isRoleValid(String token, String role){
+        if (this.getRoles(token).contains(role))
+                return true;
+        return false;
+    }
+    public boolean validateAccessTokenWebSocket(String token){
+        if (!this.validateAccessToken(token) ||
+               !this.isRoleValid(token, "ROLE_DRIVER")){
+            return false;
+        }
+        return true;
+    }
+
     public String getSubject(String token) {
         return parseClaims(token).getSubject();
+    }
+
+    private List<String> _parseRoles(String rolesString) {
+            rolesString = rolesString.substring(1, rolesString.length()-1); // Remove brackets
+            rolesString = rolesString.replaceAll("'", ""); // Remove single quotes
+            List<String> roles = Arrays.asList(rolesString.split(","));
+            return roles;
+    }
+
+    public List<String> getRoles(String token){
+        return _parseRoles(parseClaims(token).get("roles", String.class));
+    }
+    public String getUsername(String token){
+        return parseClaims(token).get("user", User.class).getUsername();
     }
 
     public Claims parseClaims(String token) {
