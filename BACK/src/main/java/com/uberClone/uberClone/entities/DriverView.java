@@ -7,12 +7,14 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import org.hibernate.annotations.Immutable;
 
+import java.io.Serializable;
+
 
 @Getter
 @Entity
 @Immutable
 @Table(name = "driver_view")
-public class DriverView {
+public class DriverView implements Serializable {
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -40,10 +42,17 @@ public class DriverView {
                 ", lastName='" + lastName + '\'' +
                 ", status='" + status + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
+                ", street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", ZIP='" + ZIP + '\'' +
+                ", lat=" + lat +
+                ", lng=" + lng +
                 '}';
     }
 
-//    @OneToOne
-//    @JoinColumn(name = "address_user_id")
-//    private Address address;
+    private String street;
+    private String city;
+    private String ZIP;
+    private Long lat;
+    private Long lng;
 }

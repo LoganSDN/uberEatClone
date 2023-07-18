@@ -44,7 +44,7 @@ export class LoginComponent {
       this.loading = false;
       if (this.tokenResponse) {
         this._authService.token = this.tokenResponse.accessToken;
-        const decodedToken: DecodedTokenI = this._jwtService.decodeToken(this.tokenResponse.accessToken);
+        const decodedToken: DecodedTokenI = this._jwtService.decodeToken(this.tokenResponse.accessToken) as DecodedTokenI;
         console.log(decodedToken.user)
         this._authService.user = decodedToken.user
         this._authService.isLogged = true;

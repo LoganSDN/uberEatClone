@@ -4,6 +4,7 @@ import com.uberClone.uberClone.entities.*;
 import com.uberClone.uberClone.repositories.DriverViewRepository;
 import com.uberClone.uberClone.repositories.RoleRepository;
 import com.uberClone.uberClone.repositories.UserRepository;
+import com.uberClone.uberClone.services.interfaces.RestaurantsService;
 import com.uberClone.uberClone.services.interfaces.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -24,7 +25,8 @@ public class UsersServiceImpl implements UsersService {
     RoleRepository roleRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
-
+    @Autowired
+    RestaurantsService restaurantsService;
     @Autowired
     DriverViewRepository driverViewRepository;
 
@@ -46,6 +48,8 @@ public class UsersServiceImpl implements UsersService {
             address.setStreet(user.getAddress().getStreet());
             address.setCity(user.getAddress().getCity());
             address.setZIP(user.getAddress().getZIP());
+            address.setLat(user.getAddress().getLat());
+            address.setLng(user.getAddress().getLng());
             address.setUser(user);
             user.setAddress(address);
         }
@@ -77,9 +81,9 @@ public class UsersServiceImpl implements UsersService {
 
     public void findDriverForOrder(Order order){
         List<DriverView> drivers= this.driverViewRepository.findAll();
-//        parse to find closest / date mes couills
-//        send websockmsg to usr
-        drivers.forEach((d)-> System.out.println(d.toString()));
+        drivers.forEach((d)-> {
+            System.out.println(d.toString());
+        });
     }
     public void updateStatus(String newStatus, User user){
         user.setStatus(newStatus);

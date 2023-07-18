@@ -8,7 +8,7 @@ import { DecodedTokenI } from '../interfaces/token';
 export class JwtService {
   constructor() { }
 
-  decodeToken(token: string): DecodedTokenI {
-    return jwt_decode(token);
+  decodeToken(token: string): DecodedTokenI | undefined{
+    return token ? jwt_decode(token) : undefined;
   }
 }

@@ -46,34 +46,50 @@ export class NewPartnerComponent implements OnInit {
       this.suggestedAddresses = suggestedAddresses;
     });
   }
-
-  private _parseAddress(address: string) {
+  private _parseAddress(address: string): Promise<any> {
     const addrProperties: string[] = address.split(',');
-    this._placesService.geocodeAddress(address).subscribe(coords => {
-      const res = {
-        street: addrProperties[0],
-        city: addrProperties[1],
-        lat: coords.lat,
-        lng: coords.lng,
-        // ZIP: addrProperties[2], // TO CHANGE
-      }
-      console.log(res);
-      return res;
-    }, error => {
-      console.error('Error geocoding address', error);
+    
+    return new Promise((resolve, reject) => {
+      this._placesService.geocodeAddress(address).subscribe(
+        (coords) => {
+          const res = {
+            street: addrProperties[0],
+            city: addrProperties[1],
+            lat: coords.lat,
+            lng: coords.lng,
+            ZIP: '69007', // TO CHANGE
+          };
+          console.log(res);
+          resolve(res);
+        },
+        (error) => {
+          console.error('Error geocoding address', error);
+          reject(error);
+        }
+      );
     });
   }
-
+  
   async submit() {
-    const post = {
-      address: this._parseAddress(this.partnerForm.get('address')!.value as string),
-      restaurantName: this.partnerForm.get('restaurantName')!.value,
-      firstName: this.partnerForm.get('firstName')!.value,
-      lastName: this.partnerForm.get('lastName')!.value,
-      email: this.partnerForm.get('email')!.value,
-      password: this.partnerForm.get('password')!.value,
-      roles: ['ROLE_OWNER']
+    try {
+      const address = await this._parseAddress(
+        this.partnerForm.get('address')!.value as string
+      );
+      const post = {
+        address: address,
+        name: this.partnerForm.get('restaurantName')!.value,
+        openingTime: '10:00',
+        closingTime: '22:00',
+      };
+      console.log(post)
+      await lastValueFrom(this._apiCallService.post('/api/restaurant/add', post));
+    } catch (error) {
+      // Gérez les erreurs ici
     }
-    await lastValueFrom(this._apiCallService.post('users', post));
+      // firstName: this.partnerForm.get('firstName')!.value,
+      // lastName: this.partnerForm.get('lastName')!.value,
+      // email: this.partnerForm.get('email')!.value,
+      // password: this.partnerForm.get('password')!.value,
+      // roles: ['ROLE_OWNER']
   }
 }

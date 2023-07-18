@@ -18,8 +18,8 @@ public class Address {
     private String street;
     private String city;
     private String ZIP;
-    private Long lat;
-    private Long lng;
+    private Double lat;
+    private Double lng;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JsonIgnore
@@ -31,7 +31,7 @@ public class Address {
     @JoinColumn(name = "address_user_id", referencedColumnName = "id")
     private User user;
 
-    public Address(String street, String city, String ZIP, Long lat, Long lng) {
+    public Address(String street, String city, String ZIP, Double lat, Double lng) {
         this.street = street;
         this.city = city;
         this.ZIP = ZIP;
