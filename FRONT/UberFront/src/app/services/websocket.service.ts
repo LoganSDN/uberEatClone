@@ -4,6 +4,7 @@ import { Stomp } from '@stomp/stompjs';
 import { AuthService } from './auth.service';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { UserI } from '../interfaces/user';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
