@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
@@ -34,12 +36,19 @@ public class DeliveryController {
     }
 
     @MessageMapping("/connect")
-    public void onConnectionDeliveryUpdate(@Header("simpSessionId") String sessionId,@Header("Authorization") String tokenHeader, String token) throws IOException {
+//    @RolesAllowed("ROLE_DRIVER")
+    @PreAuthorize("hasRole('ROLE_DRIVER')")
+    public void onConnectionDeliveryUpdate(@Header("simpSessionId") String sessionId, SimpMessageHeaderAccessor simp,String token) throws IOException {
+        Map<String, Object> attrib = simp.getSessionAttributes();
+        System.out.println("Attrib: " + attrib);//TES NUL
+        WebSocketSession sessions = (WebSocketSession) attrib.get("WEBSOCKET_SESSION_ATTRIBUTE");
         token = token.replace('\"',' ').trim();
-    System.out.println("Header Token = : "+ tokenHeader);
         System.out.println("Token :"+ token);
+//        this.simpMessagingTemplate.
         if (!this.jwtTokenUtil.validateAccessTokenWebSocket(token)){
+            sessions.close();
           System.out.println("Wrong Token =  in connect" + token);
+          this.simpMessagingTemplate.convertAndSendToUser(sessionId, "/connect", false);
         }
     }
 

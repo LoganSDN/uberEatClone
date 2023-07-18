@@ -16,14 +16,18 @@ public class WebsocketSessionHolder {
     // key - username, value - List of user's sessions
     private static Map<String, WebSocketSession> sessions;
 
-    public static void addSession(String username, WebSocketSession session)
+    public void addSession(String username, WebSocketSession session)
     {
         synchronized (sessions) {
             sessions.put(username, session);
         }
     }
 
-    public static void closeSessions(String username) throws IOException
+    public WebSocketSession getSession(String sessionId){
+        return sessions.get(sessionId);
+    }
+
+    public void closeSessions(String username) throws IOException
     {
         synchronized (sessions) {
             var userSessions = sessions.get(username);
