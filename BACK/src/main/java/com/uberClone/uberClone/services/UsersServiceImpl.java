@@ -28,13 +28,6 @@ public class UsersServiceImpl implements UsersService {
     @Autowired
     DriverViewRepository driverViewRepository;
 
-    private final SimpMessagingTemplate simpMessagingTemplate;
-
-    public UsersServiceImpl(SimpMessagingTemplate simpMessagingTemplate) {
-        this.simpMessagingTemplate = simpMessagingTemplate;
-    }
-
-
     @Override
     @Transactional
     public User createUser(User user) {

@@ -36,7 +36,7 @@ dependencies {
 	// JSON processing (optional)
 	implementation 'com.fasterxml.jackson.core:jackson-databind'
 	implementation 'org.springframework.security:spring-security-messaging:6.1.1'
-
+	implementation 'com.corundumstudio.socketio:netty-socketio:1.7.18'
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.0.4'
 
