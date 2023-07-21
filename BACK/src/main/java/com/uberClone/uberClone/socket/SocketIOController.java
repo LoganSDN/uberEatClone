@@ -35,11 +35,8 @@ public class SocketIOController {
 
 
     SocketIOController(SocketIOServer socketServer){
-
 //        socketServer.getConfiguration().setOrigin("http://localhost:4200");
-
-        this.socketServer=socketServer;
-
+        this.socketServer = socketServer;
         this.socketServer.addConnectListener(onUserConnectWithSocket);
         this.socketServer.addDisconnectListener(onUserDisconnectWithSocket);
         this.socketServer.addEventListener("messageSendToUser", Message.class, onSendMessage);
