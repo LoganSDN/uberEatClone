@@ -17,7 +17,7 @@ public class SocketIOController {
     private SocketIOServer socketServer;
 
     SocketIOController(SocketIOServer socketServer){
-        this.socketServer=socketServer;
+        this.socketServer = socketServer;
 
         this.socketServer.addConnectListener(onUserConnectWithSocket);
         this.socketServer.addDisconnectListener(onUserDisconnectWithSocket);
@@ -57,8 +57,8 @@ public class SocketIOController {
              * Send the same payload to user
              */
 
-            log.info(message.getSenderName()+" user send message to user "+message.getTargetUserName()+" and message is "+message.getMessage());
-            socketServer.getBroadcastOperations().sendEvent(message.getTargetUserName(),client, message);
+            log.info(message.getSenderName()+" user send message to user "+ message.getTargetUserName()+" and message is "+ message.getMessage());
+            socketServer.getBroadcastOperations().sendEvent(message.getTargetUserName(), client, message);
 
 
             /**

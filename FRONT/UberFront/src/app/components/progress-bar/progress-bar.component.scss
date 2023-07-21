@@ -1,0 +1,50 @@
+.progress-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 0.3em;
+  gap: 0.3em;
+  width: 70%;
+  background-color: #f2f2f2;
+  border-radius: 4px;
+}
+
+.cell {
+  flex: 1;
+  border-right: 1px solid #fff;
+  background-color: #f2f2f2;
+  transition: background-color 0.3s ease-in-out;
+  border-radius: 0.7em;
+}
+
+.cell:last-child {
+  border-right: none;
+}
+
+.cell.active {
+  background-color: #4caf50;
+  animation: fillCell 0.5s ease-out;
+}
+
+.cell.current {
+  animation: blink 2s ease-in-out infinite;
+}
+
+@keyframes fillCell {
+  0% {
+    background-color: #f2f2f2;
+  }
+  100% {
+    background-color: #4caf50;
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}

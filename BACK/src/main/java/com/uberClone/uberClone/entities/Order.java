@@ -9,6 +9,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -21,7 +22,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime dateOfOrder;
+    private Date dateOfOrder;
     private String status;
     private BigDecimal totalAmount;
     private Long susId;
@@ -57,7 +58,7 @@ public class Order {
                 '}';
     }
 
-    public Order(Long id, LocalDateTime dateOfOrder, String status, BigDecimal totalAmount) {
+    public Order(Long id, Date dateOfOrder, String status, BigDecimal totalAmount) {
         this.id = id;
         this.dateOfOrder = dateOfOrder;
         this.status = status;

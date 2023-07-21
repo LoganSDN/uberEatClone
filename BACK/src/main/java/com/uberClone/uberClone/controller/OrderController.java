@@ -33,7 +33,7 @@ public class OrderController {
         Order savedOrder = this.ordersService.createOrder(newOrder);
         if (savedOrder == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        this.usersService.findDriverForOrder(savedOrder);
+//        this.usersService.findDriverForOrder(savedOrder);
         return new ResponseEntity<>(savedOrder, HttpStatus.CREATED);
     }
 

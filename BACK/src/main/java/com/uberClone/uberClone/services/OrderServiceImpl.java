@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -50,7 +51,7 @@ public class OrderServiceImpl implements OrderService {
         newOrder.setProductsList(order.getProductsList());
         newOrder.setStatus(order.getStatus());
         newOrder.setTotalAmount(order.getTotalAmount());
-        newOrder.setDateOfOrder(LocalDateTime.now());
+        newOrder.setDateOfOrder(new Date());
         newOrder.setSusId(order.getSusId());
         newOrder.setResId(order.getResId());
         System.out.println(newOrder);
