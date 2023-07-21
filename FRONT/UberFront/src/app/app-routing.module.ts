@@ -10,6 +10,7 @@ import { DriverProfileComponent } from './view/driver-profile/driver-profile.com
 import { SignupDriverComponent } from './view/signup-driver/signup-driver.component';
 import { OneRestaurantComponent } from './view/one-restaurant/one-restaurant.component';
 import { CartComponent } from './view/cart/cart.component';
+import { DriverComponent } from './view/driver/driver.component';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'driver-profile', component: DriverProfileComponent},
   { path: 'driver-signup', component: SignupDriverComponent},
   { path: 'restaurant-details', component: OneRestaurantComponent },
+  { path: 'driver', component: DriverComponent },
   { path: 'cart', component: CartComponent },
   { path: '**', redirectTo: 'home' }
 ];

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -27,6 +28,9 @@ public class Order {
     private BigDecimal totalAmount;
     private Long susId;
     private Long resId;
+
+    @NotNull
+    private boolean driven = false;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "users_id")

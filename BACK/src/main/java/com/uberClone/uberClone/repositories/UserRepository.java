@@ -7,8 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Struct;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String login);
+
+    Optional<User> findBySocketId(UUID id);
 }

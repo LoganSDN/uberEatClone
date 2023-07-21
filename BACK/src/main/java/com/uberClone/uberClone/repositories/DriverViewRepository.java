@@ -14,6 +14,7 @@ public interface DriverViewRepository extends JpaRepository<DriverView, Long> {
     List<DriverView> findAll();
 
     List<DriverView> findAllById(Iterable<Long> longs);
+    List<DriverView> findAllByStatusContainingAndSocketIdNotNullOrderByIdAsc(String contains);
 
     List<DriverView> findAll(Sort sort);
 
