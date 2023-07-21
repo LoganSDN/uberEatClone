@@ -1,5 +1,6 @@
 package com.uberClone.uberClone.config;
 
+import com.corundumstudio.socketio.AckRequest;
 import jakarta.annotation.PreDestroy;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,8 +14,9 @@ import com.corundumstudio.socketio.listener.DisconnectListener;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-@CrossOrigin
+@CrossOrigin("*")
 @Component
+
 @Log4j2
 public class SocketIoConfig {
     @Value("${socket.host}")
@@ -30,23 +32,20 @@ public class SocketIoConfig {
         Configuration config = new Configuration();
         config.setHostname(host);
         config.setPort(port);
+//        config.setOrigin("*");
+//        config.setAllowCustomRequests(true);
+//        config.setAddVersionHeader(true);
+
         server = new SocketIOServer(config);
         server.start();
-        server.addConnectListener(new ConnectListener() {
-            @Override
-            public void onConnect(SocketIOClient client) {
 
-                log.info("new user connected with socket " + client.getSessionId());
-            }
-        });
-
-        server.addDisconnectListener(new DisconnectListener() {
-            @Override
-            public void onDisconnect(SocketIOClient client) {
-                client.getNamespace().getAllClients().stream().forEach(data-> {
-                    log.info("user disconnected "+data.getSessionId().toString());});
-            }
-        });
+//        server.addDisconnectListener(new DisconnectListener() {
+//            @Override
+//            public void onDisconnect(SocketIOClient client) {
+//                client.getNamespace().getAllClients().stream().forEach(data-> {
+//                    log.info("user disconnected "+data.getSessionId().toString());});
+//            }
+//        });
         return server;
     }
 

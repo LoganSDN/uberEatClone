@@ -73,9 +73,9 @@ public class WebSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurity
 
         return http.build();
     }
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer(){
-        return( web -> web.ignoring().requestMatchers("/ws/**"));
-    }
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer(){
+//        return( web -> web.ignoring().requestMatchers("/ws/**"));
+//    }
 
 }

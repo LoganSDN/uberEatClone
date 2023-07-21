@@ -5,15 +5,21 @@ import com.uberClone.uberClone.entities.User;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface UsersService {
     User createUser(User user);
-    void updateUser(String id, User user);
+    void updateUser(User user);
     void deleteUser(String id);
     List<User> getAllUsers();
-    User getUsersById(Long id);
+    User getUserById(Long id);
+
+    Optional<User> getBySocketId(UUID id);
 
     Optional<User> getUserByEmail(String Email);
     void findDriverForOrder(Order order);
-    void updateStatus(String Status, User user);
+    public void removeRejectedList(Long orderId);
+
+    public void addRejectedList(Long orderId, UUID userId);
+    void updateSocketUser( User user, UUID socketId);
 }

@@ -37,6 +37,11 @@ public class JwtTokenUtil {
 
     }
 
+    public Long getId(String token){
+         return Long.parseLong(parseClaims(token).getSubject().split(",")[0]);
+    }
+
+
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenUtil.class);
 
     public boolean validateAccessToken(String token) {
@@ -64,6 +69,8 @@ public class JwtTokenUtil {
         return false;
     }
     public boolean validateAccessTokenWebSocket(String token){
+        if (token == null)
+                return false;
         if (!this.validateAccessToken(token) ||
                !this.isRoleValid(token, "ROLE_DRIVER")){
             return false;

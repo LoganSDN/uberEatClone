@@ -22,6 +22,7 @@ SELECT u.id,
        u.last_name,
        u.status,
        u.phone_number,
+       u.socket_id,
        a.street,
        a.city,
        a.zip,
@@ -32,4 +33,4 @@ FROM users u
          JOIN roles r ON ur.role_id = r.id
          JOIN address a ON u.id = a.address_user_id
 WHERE r.name::text = 'ROLE_DRIVER'::text
-  AND u.status::text = 'DELIVERING'::text;
+  AND u.status::text = 'WORKING'::text;

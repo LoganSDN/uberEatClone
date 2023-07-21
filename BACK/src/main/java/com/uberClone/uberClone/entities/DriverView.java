@@ -8,6 +8,7 @@ import lombok.Getter;
 import org.hibernate.annotations.Immutable;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 
 @Getter
@@ -31,8 +32,7 @@ public class DriverView implements Serializable {
     private String phoneNumber;
 
     @Column(name = "socket_id")
-    private String socketId;
-
+    private UUID socketId;
 
     @Override
     public String toString() {
@@ -53,6 +53,6 @@ public class DriverView implements Serializable {
     private String street;
     private String city;
     private String ZIP;
-    private Long lat;
-    private Long lng;
+    private Double lat;
+    private Double lng;
 }

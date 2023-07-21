@@ -34,6 +34,7 @@ import { OneRestaurantComponent } from './view/one-restaurant/one-restaurant.com
 import { MatMenuModule } from '@angular/material/menu';
 import { CartComponent } from './view/cart/cart.component';
 import { MatCardModule } from '@angular/material/card';
+import { DriverComponent } from './view/driver/driver.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { MatCardModule } from '@angular/material/card';
     SignupDriverComponent,
     OneRestaurantComponent,
     CartComponent,
+    DriverComponent
   ],
   imports: [
     MatButtonModule,
