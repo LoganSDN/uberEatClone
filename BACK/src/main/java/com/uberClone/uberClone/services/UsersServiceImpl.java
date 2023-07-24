@@ -80,8 +80,8 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public User getUserById(Long id) {
-        return this.userRepository.findById(id).orElse(null);
+    public Optional<User> getUserById(Long id) {
+        return this.userRepository.findById(id);
     }
 
     private static Map<Long, List<UUID>> rejectList = new HashMap<Long, List<UUID>>();

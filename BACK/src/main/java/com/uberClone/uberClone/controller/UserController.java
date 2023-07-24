@@ -30,8 +30,8 @@ public class UserController {
     @GetMapping("/{id}")
     @RolesAllowed("ROLE_ADMIN")
     public ResponseEntity<User> getUserById(@PathVariable("id") String id) {
-        User user = userService.getUserById(Long.parseLong(id));
-        if (user.equals(null)) {
+        User user = userService.getUserById(Long.parseLong(id)).orElse(null);
+        if (user == null) {
             throw new EntityNotFoundException();
         } else {
             return new ResponseEntity<>(user, HttpStatus.OK);

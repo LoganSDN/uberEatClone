@@ -11,13 +11,18 @@ export class DriverSocketService {
   private driverSocket : DriversocketConfig | undefined = undefined;
   private token :string|undefined = undefined;
   constructor(private readonly authService: AuthService) {
+    console.log('One instance of SocketService')
     this.authService.token$.subscribe((token) => {this.token = token});
   }
 
-  async onConnect(){
+  get socketServer() {
+    return this.driverSocket;
+  }
+
+  onConnect(){
     if (this.token != undefined){
-      this.driverSocket = new DriversocketConfig();
-      await this.driverSocket.connect();
+      this.driverSocket = this.driverSocket == undefined ? new DriversocketConfig() : this.driverSocket;
+      
       this.driverSocket.on("connect_error", (err :any) => {
         console.log(`connect_error due to ${err.message}`);
       });

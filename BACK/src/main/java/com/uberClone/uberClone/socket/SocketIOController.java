@@ -3,6 +3,7 @@ package com.uberClone.uberClone.socket;
 import com.corundumstudio.socketio.AckRequest;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
+import com.corundumstudio.socketio.annotation.OnEvent;
 import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
 import com.corundumstudio.socketio.listener.DisconnectListener;
@@ -40,8 +41,27 @@ public class SocketIOController {
         this.socketServer.addConnectListener(onUserConnectWithSocket);
         this.socketServer.addDisconnectListener(onUserDisconnectWithSocket);
         this.socketServer.addEventListener("messageSendToUser", Message.class, onSendMessage);
-        this.socketServer.addEventListener("DriverResponse", DriverResponse.class, onDriverResponse);
+//        this.socketServer.addEventListener("DriverResponse", DriverResponse.class, onDriverResponse);
     }
+    @OnEvent("DriverResponse")
+    public void onDriverResponse(SocketIOClient client, AckRequest ackSender, DriverResponse data) throws Exception {
+        log.info("Yes Received response: " +  data.getOrderId() + " " + data.isStatus());
+        User user = usersService.getUserById(data.getDriverId()).orElse(null);
+
+        if (data.isStatus()){
+            orderService.changeDrivenStatus(data.getOrderId());
+            user.setStatus("DELIVERING");
+            usersService.updateUser(user);
+            usersService.removeRejectedList(data.getOrderId());
+        }
+        else{
+            System.out.println("I got denied : " + client.getSessionId());
+            usersService.addRejectedList(data.getOrderId(), client.getSessionId());
+//                    wait(2000);
+            usersService.findDriverForOrder(orderService.getOrderById( data.getOrderId()));
+        }
+    }
+
 
 
     public ConnectListener onUserConnectWithSocket = new ConnectListener() {
@@ -55,13 +75,16 @@ public class SocketIOController {
                 return;
             }
             Long id = jwtTokenUtil.getId(token);
-            User user = usersService.getUserById(id);
+//            System.out.println("Client.handshake" + client.getHandshakeData().getHttpHeaders() + " id " + id );
+            User user = usersService.getUserById(id).orElse(null);
 
             if (user == null){
+                System.out.print("Could not find user");
                 client.disconnect();
                 return;
             }
             usersService.updateSocketUser(user, client.getSessionId());
+//            System.out.println("USer : " + user.toString() + " but still left ");
         }
     };
 
@@ -88,23 +111,23 @@ public class SocketIOController {
         }
 
     };
-        public DataListener<DriverResponse> onDriverResponse = new DataListener<DriverResponse>() {
-            @Override
-            public void onData(SocketIOClient client, DriverResponse data, AckRequest ackSender) throws Exception {
-                log.info("Yes Received response: " +  data.getOrderId() + " " + data.isStatus());
-                User user = usersService.getUserById(data.getDriverId());
-                if (data.isStatus()){
-                    orderService.changeDrivenStatus(data.getOrderId());
-                    user.setStatus("DELIVERING");
-                    usersService.updateUser(user);
-                    usersService.removeRejectedList(data.getOrderId());
-                }
-                else{
-                    System.out.println("I got denied : " + client.getSessionId());
-                    usersService.addRejectedList(data.getOrderId(), client.getSessionId());
-//                    wait(2000);
-                    usersService.findDriverForOrder(orderService.getOrderById( data.getOrderId()));
-                }
-            }
-        };
+//        public DataListener<DriverResponse> onDriverResponse = new DataListener<DriverResponse>() {
+//            @Override
+//            public void onData(SocketIOClient client, DriverResponse data, AckRequest ackSender) throws Exception {
+//                log.info("Yes Received response: " +  data.getOrderId() + " " + data.isStatus());
+//                User user = usersService.getUserById(data.getDriverId()).orElse(null);
+//                if (data.isStatus()){
+//                    orderService.changeDrivenStatus(data.getOrderId());
+//                    user.setStatus("DELIVERING");
+//                    usersService.updateUser(user);
+//                    usersService.removeRejectedList(data.getOrderId());
+//                }
+//                else{
+//                    System.out.println("I got denied : " + client.getSessionId());
+//                    usersService.addRejectedList(data.getOrderId(), client.getSessionId());
+////                    wait(2000);
+//                    usersService.findDriverForOrder(orderService.getOrderById( data.getOrderId()));
+//                }
+//            }
+//        };
 }

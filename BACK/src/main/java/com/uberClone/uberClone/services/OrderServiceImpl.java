@@ -34,7 +34,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order createOrder(Order order) {
-        User user = this.usersService.getUserById(order.getSusId());
+        User user = this.usersService.getUserById(order.getSusId()).orElse(null);
         Restaurant res = this.restaurantsService.getRestaurantById(order.getResId());
         if (res == null)
             return null;

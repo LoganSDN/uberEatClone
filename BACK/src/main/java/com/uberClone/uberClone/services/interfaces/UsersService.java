@@ -12,7 +12,7 @@ public interface UsersService {
     void updateUser(User user);
     void deleteUser(String id);
     List<User> getAllUsers();
-    User getUserById(Long id);
+    Optional<User> getUserById(Long id);
 
     Optional<User> getBySocketId(UUID id);
 
