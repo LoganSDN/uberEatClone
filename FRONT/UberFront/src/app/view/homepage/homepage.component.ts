@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { WebSocketService } from 'src/app/services/websocket.service';
-
+ import {Socket} from 'ngx-socket-io';
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
