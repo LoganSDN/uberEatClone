@@ -15,12 +15,25 @@ import java.util.*;
 @Table(name = "users")
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 public class User implements UserDetails {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
+
+        @Override
+        public String toString() {
+                return "User{" +
+                        "id=" + id +
+                        ", socketId=" + socketId +
+                        ", firstName='" + firstName + '\'' +
+                        ", lastName='" + lastName + '\'' +
+                        ", email='" + email + '\'' +
+                        ", password='" + password + '\'' +
+                        ", phoneNumber='" + phoneNumber + '\'' +
+                        '}';
+        }
+
         private UUID socketId;
         private String firstName;
         private String lastName;

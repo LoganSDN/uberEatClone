@@ -32,8 +32,9 @@ public class SocketIoConfig {
         Configuration config = new Configuration();
         config.setHostname(host);
         config.setPort(port);
-//        config.setOrigin("*");
-//        config.setAllowCustomRequests(true);
+        config.setOrigin("*");
+        System.out.println("Ssl Protocol" + config.getSSLProtocol());
+        config.setAllowCustomRequests(true);
 //        config.setAddVersionHeader(true);
 
         server = new SocketIOServer(config);

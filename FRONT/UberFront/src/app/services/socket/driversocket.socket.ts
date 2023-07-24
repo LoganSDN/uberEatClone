@@ -10,10 +10,11 @@ export function getToken(){
 })
 export class DriversocketConfig extends Socket {
   constructor(){
+	console.log("Creating socket for front");
 	super({
 			url:  "/socket",
 			options: {
-				autoConnect: false,
+				transports: ["polling", "websocket"],
 				// reconnectionAttempts: 4,
 				extraHeaders: {
 					Authorization: getToken() ?? '',
@@ -21,4 +22,5 @@ export class DriversocketConfig extends Socket {
 			}
 		});
   };
+  
 }

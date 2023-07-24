@@ -13,10 +13,22 @@ export class DriverComponent {
   constructor(private readonly driverSocket: DriverSocketService){
   }
 
-  async onConnect(){
-    (await this.driverSocket.onConnect())?.subscribe((order : OrderI) => {
+   onConnect(){
+    this.driverSocket.onConnect()?.subscribe((order : OrderI) => {
       console.log("Received New Order:", order);
       this.order  = order;
     });
+  }
+ 
+  onSendMsg() {
+    this.driverSocket.socketServer?.emit('messageSendToUser', {
+
+      "senderName": "user112233",
+  
+      "targetUsername": "user332211",
+  
+      "message": "Va bien te faire **** spring"
+  
+  })
   }
 }
